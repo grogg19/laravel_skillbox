@@ -1,5 +1,7 @@
-@extends('index')
+@extends ('layout.main')
 
 @section('content')
-    <h1>О нас</h1>
+    <h3 class="pb-3 mb-4 font-italic border-bottom">
+        {{ $title }}
+    </h3>
 @endsection
