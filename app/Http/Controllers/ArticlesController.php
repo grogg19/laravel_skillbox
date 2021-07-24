@@ -38,7 +38,9 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->boolean('isPublished');
+        $request->merge([
+            'is_published' => $request->boolean('is_published'),
+        ]);
 
         $rules = [
             'title' => 'required|unique:articles|min:5|max:100',
@@ -47,8 +49,12 @@ class ArticlesController extends Controller
             'body' => 'required',
         ];
 
-        $result = $this->validate($request, $rules);
-        ArticleRepository::createArticle($result);
+
+        $this->validate($request, $rules);
+
+        //dd($request->post());
+        ArticleRepository::createArticle($request->post());
+
 
         return redirect('/');
     }
@@ -60,7 +66,8 @@ class ArticlesController extends Controller
      */
     public function show($slug)
     {
-        return ArticleRepository::getArticleBySlug($slug);
+        $article = ArticleRepository::getArticleBySlug($slug);
+        return view('articles.show', compact('article'));
     }
 
     /**
