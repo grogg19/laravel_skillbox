@@ -33,7 +33,7 @@ class ArticleRepository
      */
     public static function getArticleBySlug(string $slug)
     {
-        return Article::where('slug', $slug)->get();
+        return Article::where('slug', $slug)->first();
     }
 
     /**
