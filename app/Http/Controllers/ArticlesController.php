@@ -56,9 +56,8 @@ class ArticlesController extends Controller
      * Display the specified article.
      *
      * @param  string  $slug
-     * @return Response
      */
-    public function show($slug): Response
+    public function show($slug)
     {
         return ArticleRepository::getArticleBySlug($slug);
     }
