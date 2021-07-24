@@ -31,8 +31,16 @@ class ArticleRepository
      * @param string $slug
      * @return mixed
      */
-    public function getArticleBySlug(string $slug)
+    public static function getArticleBySlug(string $slug)
     {
         return Article::where('slug', $slug);
+    }
+
+    /**
+     * @param $data
+     */
+    public static function createArticle($data)
+    {
+        Article::create($data);
     }
 }
