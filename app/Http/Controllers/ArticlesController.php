@@ -39,6 +39,7 @@ class ArticlesController extends Controller
     public function store(Request $request)
     {
         $request->boolean('isPublished');
+
         $rules = [
             'title' => 'required|unique:articles|min:5|max:100',
             'slug' => 'required|unique:articles',

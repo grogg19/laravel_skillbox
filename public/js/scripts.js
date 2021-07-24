@@ -119,6 +119,6 @@ const targetSlugify = document.querySelector('form .data-target-slugify');
 if(sourceSlugify) {
     sourceSlugify.oninput = async (e) => {
         e.preventDefault();
-        targetSlugify.value = '/' + slugify(sourceSlugify.value);
+        targetSlugify.value = slugify(sourceSlugify.value);
     }
 }
