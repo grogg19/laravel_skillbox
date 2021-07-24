@@ -16,41 +16,51 @@ class ArticlesController extends Controller
      */
     public function index(): View
     {
-        $listArticles = ArticleRepository::listArticles();
-        dd($listArticles);
-        return view('index', compact('listArticles'));
+        $articles = ArticleRepository::listArticles();
+
+        return view('index', compact('articles'));
     }
 
     /**
      * Show the form for creating a new article.
-     *
-     * @return Response
+     * @return View
      */
-    public function create(): Response
+    public function create(): View
     {
-        //
+        return view('articles.create');
     }
 
     /**
      * Store a newly created article in storage.
-     *
-     * @param  Request  $request
-     * @return Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): Response
+    public function store(Request $request)
     {
-        //
+        $request->boolean('isPublished');
+        $rules = [
+            'title' => 'required|unique:articles|min:5|max:100',
+            'slug' => 'required|unique:articles',
+            'excerpt' => 'required|max:255',
+            'body' => 'required',
+        ];
+
+        $result = $this->validate($request, $rules);
+        ArticleRepository::createArticle($result);
+
+        return redirect('/');
     }
 
     /**
      * Display the specified article.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return Response
      */
-    public function show($id): Response
+    public function show($slug): Response
     {
-        //
+        return ArticleRepository::getArticleBySlug($slug);
     }
 
     /**
