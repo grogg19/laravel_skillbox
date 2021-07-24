@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">
+{{--    <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">--}}
 
     <title>Blog Template for Bootstrap</title>
 
@@ -34,11 +34,6 @@
         <div class="col-md-8 blog-main">
 
             @yield('content')
-
-            <nav class="blog-pagination">
-                <a class="btn btn-outline-primary" href="#">Older</a>
-                <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-            </nav>
 
         </div><!-- /.blog-main -->
 
