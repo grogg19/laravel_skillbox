@@ -32,8 +32,8 @@
             <textarea class="form-control" id="body" rows="3" name="body"></textarea>
         </div>
         <div class="custom-control custom-checkbox form-group">
-            <input type="checkbox" class="custom-control-input" id="isPublished" name="isPublished">
-            <label class="custom-control-label" for="isPublished">Опубликовать</label>
+            <input type="checkbox" class="custom-control-input" id="is_published" name="is_published">
+            <label class="custom-control-label" for="is_published">Опубликовать</label>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Сохранить</button>
