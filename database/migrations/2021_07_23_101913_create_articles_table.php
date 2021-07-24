@@ -19,6 +19,7 @@ class CreateArticlesTable extends Migration
             $table->string('slug')->unique();
             $table->text('excerpt');
             $table->text('body');
+            $table->boolean('is_published')->default(0);
             $table->timestamps();
         });
     }
