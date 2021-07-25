@@ -17,8 +17,9 @@ class ArticlesController extends Controller
     public function index(): View
     {
         $articles = ArticleRepository::listArticles();
+        $title = 'Главная';
 
-        return view('index', compact('articles'));
+        return view('index', compact('articles', 'title'));
     }
 
     /**
@@ -27,7 +28,8 @@ class ArticlesController extends Controller
      */
     public function create(): View
     {
-        return view('articles.create');
+        $title = 'Создание статьи';
+        return view('articles.create', compact('title'));
     }
 
     /**
@@ -67,40 +69,9 @@ class ArticlesController extends Controller
     public function show($slug)
     {
         $article = ArticleRepository::getArticleBySlug($slug);
-        return view('articles.show', compact('article'));
-    }
 
-    /**
-     * Show the form for editing the specified article.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id): Response
-    {
-        //
-    }
+        $title = 'Статья | ' . $article->title;
 
-    /**
-     * Update the specified article in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, int $id): Response
-    {
-        //
-    }
-
-    /**
-     * Remove the specified article from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy(int $id): Response
-    {
-        //
+        return view('articles.show', compact('article', 'title'));
     }
 }
