@@ -15,7 +15,9 @@ class ArticleRepository
      */
     public static function listArticles()
     {
-        return Article::latest()->get();
+        return Article::latest()
+            ->where('is_published', 1)
+            ->get();
     }
 
     /**
