@@ -1,5 +1,5 @@
-@extends('index')
+@extends ('layout.main')
 
 @section('content')
-    <h1>Список обращений</h1>
+    @include ('messages.list')
 @endsection
