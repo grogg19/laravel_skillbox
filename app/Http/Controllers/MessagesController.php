@@ -15,15 +15,15 @@ class MessagesController extends Controller
     /**
      * @var MessageRepositoryInterface
      */
-    private $messagesStorage;
+    private $messagesRequest;
 
     /**
      * MessagesController constructor.
-     * @param MessageRepositoryInterface $messagesStorage
+     * @param MessageRepositoryInterface $messagesRequest
      */
-    public function __construct(MessageRepositoryInterface $messagesStorage)
+    public function __construct(MessageRepositoryInterface $messagesRequest)
     {
-        $this->messagesStorage = $messagesStorage;
+        $this->messagesRequest = $messagesRequest;
     }
 
     /**
@@ -33,7 +33,7 @@ class MessagesController extends Controller
      */
     public function index(): View
     {
-        $messages = $this->messagesStorage->listMessages();
+        $messages = $this->messagesRequest->listMessages();
 
         return view('feedback', compact('messages'));
     }
@@ -57,7 +57,7 @@ class MessagesController extends Controller
 
         $resultValidation = $request->validated();
 
-        $this->messagesStorage->createMessage($resultValidation);
+        $this->messagesRequest->createMessage($resultValidation);
 
         return redirect(route('page.feedback'));
     }

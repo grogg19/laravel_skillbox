@@ -15,15 +15,15 @@ class ArticlesController extends Controller
     /**
      * @var ArticleRepositoryInterface
      */
-    private $articleStorage;
+    private $articleRequest;
 
     /**
      * ArticlesController constructor.
-     * @param ArticleRepositoryInterface $articleStorage
+     * @param ArticleRepositoryInterface $articleRequest
      */
-    public function __construct(ArticleRepositoryInterface $articleStorage)
+    public function __construct(ArticleRepositoryInterface $articleRequest)
     {
-        $this->articleStorage = $articleStorage;
+        $this->articleRequest = $articleRequest;
     }
 
     /**
@@ -33,7 +33,7 @@ class ArticlesController extends Controller
      */
     public function index(): View
     {
-        $articles = $this->articleStorage->listArticles();
+        $articles = $this->articleRequest->listArticles();
 
         return view('index', compact('articles'));
     }
@@ -59,7 +59,7 @@ class ArticlesController extends Controller
 
         $resultValidation['is_published'] = $request->boolean('is_published');
 
-        $this->articleStorage->createArticle($resultValidation);
+        $this->articleRequest->createArticle($resultValidation);
 
         return redirect(route('page.main'));
     }
@@ -71,7 +71,7 @@ class ArticlesController extends Controller
      */
     public function show(string $slug)
     {
-        $article = $this->articleStorage->getArticleBySlug($slug);
+        $article = $this->articleRequest->getArticleBySlug($slug);
 
         return view('articles.show', compact('article'));
     }
