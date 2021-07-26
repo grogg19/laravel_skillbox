@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Article\StoreArticle;
-use App\Repositories\ArticleType;
+use App\Repositories\ArticleRepositoryInterface;
 use Illuminate\View\View;
 
 /**
@@ -13,15 +13,15 @@ use Illuminate\View\View;
 class ArticlesController extends Controller
 {
     /**
-     * @var ArticleType
+     * @var ArticleRepositoryInterface
      */
     private $articleStorage;
 
     /**
      * ArticlesController constructor.
-     * @param ArticleType $articleStorage
+     * @param ArticleRepositoryInterface $articleStorage
      */
-    public function __construct(ArticleType $articleStorage)
+    public function __construct(ArticleRepositoryInterface $articleStorage)
     {
         $this->articleStorage = $articleStorage;
     }

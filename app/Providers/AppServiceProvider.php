@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\ArticleType;
+use App\Repositories\ArticleRepositoryInterface;
 use App\Repositories\ArticleRepository;
-use App\Repositories\MessageType;
+use App\Repositories\MessageRepositoryInterface;
 use App\Repositories\MessageRepository;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,8 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(ArticleType::class, ArticleRepository::class);
-        $this->app->bind(MessageType::class, MessageRepository::class);
+        $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
+        $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
     }
 
     /**

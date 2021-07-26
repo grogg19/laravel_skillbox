@@ -7,7 +7,7 @@ namespace App\Repositories;
  * Interface ArticleInterface
  * @package App\Repositories
  */
-interface ArticleType
+interface ArticleRepositoryInterface
 {
     public function listArticles();
 

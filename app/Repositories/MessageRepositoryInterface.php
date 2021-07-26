@@ -7,7 +7,7 @@ namespace App\Repositories;
  * Interface MessageType
  * @package App\Repositories
  */
-interface MessageType
+interface MessageRepositoryInterface
 {
     public function listMessages();
 

@@ -7,7 +7,7 @@ use App\Models\Message;
  * Class MessageRepository
  * @package App\Repositories
  */
-class MessageRepository implements MessageType
+class MessageRepository implements MessageRepositoryInterface
 {
     /**
     * @return mixed

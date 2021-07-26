@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
  * Class ArticleRepository
  * @package App\Repositories
  */
-class ArticleRepository implements ArticleType
+class ArticleRepository implements ArticleRepositoryInterface
 {
     /**
      * @return mixed

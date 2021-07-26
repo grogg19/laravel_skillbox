@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Message\StoreMessage;
-use App\Repositories\MessageType;
+use App\Repositories\MessageRepositoryInterface;
 use Illuminate\View\View;
 
 /**
@@ -13,15 +13,15 @@ use Illuminate\View\View;
 class MessagesController extends Controller
 {
     /**
-     * @var MessageType
+     * @var MessageRepositoryInterface
      */
     private $messagesStorage;
 
     /**
      * MessagesController constructor.
-     * @param MessageType $messagesStorage
+     * @param MessageRepositoryInterface $messagesStorage
      */
-    public function __construct(MessageType $messagesStorage)
+    public function __construct(MessageRepositoryInterface $messagesStorage)
     {
         $this->messagesStorage = $messagesStorage;
     }
