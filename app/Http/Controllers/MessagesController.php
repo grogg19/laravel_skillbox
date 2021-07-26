@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Message\StoreMessage;
 use App\Repositories\MessageType;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
@@ -49,18 +49,13 @@ class MessagesController extends Controller
 
     /**
      * Store a newly created message in storage.
-     * @param Request $request
+     * @param StoreMessage $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(StoreMessage $request)
     {
-        $rules = [
-            'email' => 'required|email',
-            'body' => 'required',
-        ];
 
-        $resultValidation = $this->validate($request, $rules);
+        $resultValidation = $request->validated();
 
         $this->messagesStorage->createMessage($resultValidation);
 
