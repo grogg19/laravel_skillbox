@@ -15,7 +15,7 @@
             </ul>
         </div>
     @endif
-    <form method="post" action="{{ route('saveArticle') }}">
+    <form method="post" action="{{ route('article.save') }}">
         @csrf
         <div class="form-group">
             <label for="title">Заголовок:</label>

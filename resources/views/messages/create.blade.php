@@ -15,7 +15,7 @@
             </ul>
         </div>
     @endif
-    <form method="post" action="{{ route('saveMessage') }}">
+    <form method="post" action="{{ route('message.save') }}">
         @csrf
         <div class="form-group">
             <label for="email">Email:</label>

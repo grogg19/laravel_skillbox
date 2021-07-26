@@ -10,6 +10,6 @@
     <p class="blog-post-meta">{{ $article->created_at->toFormattedDateString() }}</p>
     {{ $article->body }}
     <p>
-        <a href="/">К списку статей</a>
+        <a href="{{ route('page.main') }}">К списку статей</a>
     </p>
 @endsection

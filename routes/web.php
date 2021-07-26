@@ -2,15 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'ArticlesController@index')->name('mainPage');
-Route::get('/articles/create', 'ArticlesController@create')->name('createArticle');
-Route::post('/articles/store', 'ArticlesController@store')->name('saveArticle');
-Route::get('/articles/{slug}', 'ArticlesController@show')->name('showArticle');
+Route::get('/', 'ArticlesController@index')->name('page.main');
+Route::get('/articles/create', 'ArticlesController@create')->name('article.create');
+Route::post('/articles/store', 'ArticlesController@store')->name('article.save');
+Route::get('/articles/{slug}', 'ArticlesController@show')->name('article.show');
 
-Route::get('/feedback', 'MessagesController@index')->name('feedbackPage');
-Route::get('/contacts', 'MessagesController@create')->name('contactsPage');
-Route::post('/contacts/store', 'MessagesController@store')->name('saveMessage');
+Route::get('/feedback', 'MessagesController@index')->name('page.feedback');
+Route::get('/contacts', 'MessagesController@create')->name('page.contacts]');
+Route::post('/contacts/store', 'MessagesController@store')->name('message.save');
 
 Route::get('/about/', function () {
     return view('about');
-})->name('aboutPage');
+})->name('page.about');
