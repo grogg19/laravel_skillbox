@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Article\StoreArticle;
+use App\Http\Requests\Article\StoreArticleRequest;
 use App\Repositories\ArticleRepositoryInterface;
 use Illuminate\View\View;
 
@@ -49,10 +49,10 @@ class ArticlesController extends Controller
 
     /**
      * Store a newly created article in storage.
-     * @param StoreArticle $request
+     * @param StoreArticleRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(StoreArticle $request)
+    public function store(StoreArticleRequest $request)
     {
 
         $resultValidation = $request->validated();

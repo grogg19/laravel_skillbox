@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Message\StoreMessage;
+use App\Http\Requests\Message\StoreMessageRequest;
 use App\Repositories\MessageRepositoryInterface;
 use Illuminate\View\View;
 
@@ -49,10 +49,10 @@ class MessagesController extends Controller
 
     /**
      * Store a newly created message in storage.
-     * @param StoreMessage $request
+     * @param StoreMessageRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(StoreMessage $request)
+    public function store(StoreMessageRequest $request)
     {
 
         $resultValidation = $request->validated();
