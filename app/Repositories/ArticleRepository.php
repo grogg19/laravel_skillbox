@@ -13,7 +13,7 @@ class ArticleRepository
     /**
      * @return mixed
      */
-    public static function listArticles()
+    public function listArticles()
     {
         return Article::latest()
             ->where('is_published', 1)
@@ -21,19 +21,10 @@ class ArticleRepository
     }
 
     /**
-     * @param int $id
-     * @return mixed
-     */
-    public function getArticleById(int $id)
-    {
-        return Article::where('id', $id)->get();
-    }
-
-    /**
      * @param string $slug
      * @return mixed
      */
-    public static function getArticleBySlug(string $slug)
+    public function getArticleBySlug(string $slug)
     {
         return Article::where('slug', $slug)->first();
     }
@@ -41,7 +32,7 @@ class ArticleRepository
     /**
      * @param $data
      */
-    public static function createArticle($data)
+    public function createArticle($data)
     {
         Article::create($data);
     }
