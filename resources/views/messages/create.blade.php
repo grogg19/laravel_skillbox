@@ -15,15 +15,15 @@
             </ul>
         </div>
     @endif
-    <form method="post" action="/contacts/store">
+    <form method="post" action="{{ route('saveMessage') }}">
         @csrf
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="text" class="form-control" id="email" name="email" placeholder="Введите email" />
+            <input type="text" class="form-control" id="email" name="email" placeholder="Введите email" value="{{ old('email') }}"/>
         </div>
         <div class="form-group">
             <label for="body">Текст сообщения:</label>
-            <textarea class="form-control" id="body" rows="3" name="body"></textarea>
+            <textarea class="form-control" id="body" rows="3" name="body">{{ old('body') }}</textarea>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Отправить</button>
