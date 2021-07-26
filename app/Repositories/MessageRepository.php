@@ -7,20 +7,20 @@ use App\Models\Message;
  * Class MessageRepository
  * @package App\Repositories
  */
-class MessageRepository
+class MessageRepository implements MessageType
 {
     /**
     * @return mixed
     */
-    public static function listMessages()
+    public function listMessages()
     {
         return Message::latest()->get();
     }
 
     /**
-     * @param $data
+     * @param array $data
      */
-    public static function createMessage($data)
+    public function createMessage(array $data)
     {
         Message::create($data);
     }

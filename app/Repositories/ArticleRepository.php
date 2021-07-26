@@ -3,17 +3,18 @@
 namespace App\Repositories;
 
 use App\Models\Article;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class ArticleRepository
  * @package App\Repositories
  */
-class ArticleRepository
+class ArticleRepository implements ArticleType
 {
     /**
      * @return mixed
      */
-    public function listArticles()
+    public function listArticles(): Collection
     {
         return Article::latest()
             ->where('is_published', 1)
@@ -30,9 +31,9 @@ class ArticleRepository
     }
 
     /**
-     * @param $data
+     * @param array $data
      */
-    public function createArticle($data)
+    public function createArticle(array $data)
     {
         Article::create($data);
     }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\MessageRepository;
+use App\Repositories\MessageType;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -13,13 +13,27 @@ use Illuminate\View\View;
 class MessagesController extends Controller
 {
     /**
+     * @var MessageType
+     */
+    private $messagesStorage;
+
+    /**
+     * MessagesController constructor.
+     * @param MessageType $messagesStorage
+     */
+    public function __construct(MessageType $messagesStorage)
+    {
+        $this->messagesStorage = $messagesStorage;
+    }
+
+    /**
      * Display a listing of the messages.
      *
      * @return View
      */
     public function index(): View
     {
-        $messages = MessageRepository::listMessages();
+        $messages = $this->messagesStorage->listMessages();
         $title = 'Список обращений';
 
         return view('feedback', compact('messages', 'title'));
@@ -50,7 +64,7 @@ class MessagesController extends Controller
 
         $this->validate($request, $rules);
 
-        MessageRepository::createMessage($request->post());
+        $this->messagesStorage->createMessage($request->post());
 
         return redirect('/feedback');
     }

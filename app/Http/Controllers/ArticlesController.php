@@ -2,13 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ArticleRepository;
+use App\Repositories\ArticleType;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class ArticlesController extends Controller
 {
+    /**
+     * @var ArticleType
+     */
+    private $articleStorage;
+
+    /**
+     * ArticlesController constructor.
+     * @param ArticleType $articleStorage
+     */
+    public function __construct(ArticleType $articleStorage)
+    {
+        $this->articleStorage = $articleStorage;
+    }
+
     /**
      * Display a listing of the articles.
      *
@@ -16,7 +29,7 @@ class ArticlesController extends Controller
      */
     public function index(): View
     {
-        $articles = ArticleRepository::listArticles();
+        $articles = $this->articleStorage->listArticles();
         $title = 'Главная';
 
         return view('index', compact('articles', 'title'));
@@ -51,11 +64,9 @@ class ArticlesController extends Controller
             'body' => 'required',
         ];
 
-
         $this->validate($request, $rules);
 
-        //dd($request->post());
-        ArticleRepository::createArticle($request->post());
+        $this->articleStorage->createArticle($request->post());
 
 
         return redirect('/');
@@ -68,7 +79,7 @@ class ArticlesController extends Controller
      */
     public function show($slug)
     {
-        $article = ArticleRepository::getArticleBySlug($slug);
+        $article = $this->articleStorage->getArticleBySlug($slug);
 
         $title = 'Статья | ' . $article->title;
 
