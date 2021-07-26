@@ -64,6 +64,6 @@ class MessagesController extends Controller
 
         $this->messagesStorage->createMessage($request->post());
 
-        return redirect(route('feedbackPage'));
+        return redirect(route('page.feedback'));
     }
 }

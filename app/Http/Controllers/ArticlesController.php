@@ -66,15 +66,15 @@ class ArticlesController extends Controller
 
         $this->articleStorage->createArticle($request->post());
 
-        return redirect(route('mainPage'));
+        return redirect(route('page.main'));
     }
 
     /**
      * Display the specified article.
-     *
-     * @param  string  $slug
+     * @param string $slug
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show($slug)
+    public function show(string $slug)
     {
         $article = $this->articleStorage->getArticleBySlug($slug);
 
