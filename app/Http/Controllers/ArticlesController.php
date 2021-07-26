@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Article\StoreArticle;
 use App\Repositories\ArticleType;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
@@ -49,20 +49,14 @@ class ArticlesController extends Controller
 
     /**
      * Store a newly created article in storage.
-     * @param Request $request
+     * @param StoreArticle $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(StoreArticle $request)
     {
-        $rules = [
-            'title' => 'required|unique:articles|min:5|max:100',
-            'slug' => 'required|unique:articles',
-            'excerpt' => 'required|max:255',
-            'body' => 'required',
-        ];
 
-        $resultValidation = $this->validate($request, $rules);
+        $resultValidation = $request->validated();
+
         $resultValidation['is_published'] = $request->boolean('is_published');
 
         $this->articleStorage->createArticle($resultValidation);
