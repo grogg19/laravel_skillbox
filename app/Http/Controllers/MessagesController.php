@@ -34,9 +34,8 @@ class MessagesController extends Controller
     public function index(): View
     {
         $messages = $this->messagesStorage->listMessages();
-        $title = 'Список обращений';
 
-        return view('feedback', compact('messages', 'title'));
+        return view('feedback', compact('messages'));
     }
 
     /**
@@ -45,8 +44,7 @@ class MessagesController extends Controller
      */
     public function create(): View
     {
-        $title = 'Отправить сообщение ';
-        return view('messages.create', compact('title'));
+        return view('messages.create');
     }
 
     /**
@@ -66,6 +64,6 @@ class MessagesController extends Controller
 
         $this->messagesStorage->createMessage($request->post());
 
-        return redirect('/feedback');
+        return redirect(route('feedbackPage'));
     }
 }
