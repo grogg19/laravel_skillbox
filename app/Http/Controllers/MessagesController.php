@@ -60,9 +60,9 @@ class MessagesController extends Controller
             'body' => 'required',
         ];
 
-        $this->validate($request, $rules);
+        $resultValidation = $this->validate($request, $rules);
 
-        $this->messagesStorage->createMessage($request->post());
+        $this->messagesStorage->createMessage($resultValidation);
 
         return redirect(route('page.feedback'));
     }
