@@ -6,6 +6,10 @@ use App\Repositories\ArticleType;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Class ArticlesController
+ * @package App\Http\Controllers
+ */
 class ArticlesController extends Controller
 {
     /**
@@ -51,10 +55,6 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge([
-            'is_published' => $request->boolean('is_published'),
-        ]);
-
         $rules = [
             'title' => 'required|unique:articles|min:5|max:100',
             'slug' => 'required|unique:articles',
@@ -62,9 +62,10 @@ class ArticlesController extends Controller
             'body' => 'required',
         ];
 
-        $this->validate($request, $rules);
+        $resultValidation = $this->validate($request, $rules);
+        $resultValidation['is_published'] = $request->boolean('is_published');
 
-        $this->articleStorage->createArticle($request->post());
+        $this->articleStorage->createArticle($resultValidation);
 
         return redirect(route('page.main'));
     }
