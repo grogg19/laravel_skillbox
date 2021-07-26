@@ -1,5 +1,7 @@
-@extends ('layout.main')
+@extends('layout.main')
 
-@section ('content')
-    @include ('articles.list')
+@section('title', "Главная")
+
+@section('content')
+    @include('articles.list')
 @endsection

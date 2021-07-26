@@ -30,9 +30,8 @@ class ArticlesController extends Controller
     public function index(): View
     {
         $articles = $this->articleStorage->listArticles();
-        $title = 'Главная';
 
-        return view('index', compact('articles', 'title'));
+        return view('index', compact('articles'));
     }
 
     /**
