@@ -40,8 +40,7 @@ class ArticlesController extends Controller
      */
     public function create(): View
     {
-        $title = 'Создание статьи';
-        return view('articles.create', compact('title'));
+        return view('articles.create');
     }
 
     /**
@@ -67,8 +66,7 @@ class ArticlesController extends Controller
 
         $this->articleStorage->createArticle($request->post());
 
-
-        return redirect('/');
+        return redirect(route('mainPage'));
     }
 
     /**
@@ -80,8 +78,6 @@ class ArticlesController extends Controller
     {
         $article = $this->articleStorage->getArticleBySlug($slug);
 
-        $title = 'Статья | ' . $article->title;
-
-        return view('articles.show', compact('article', 'title'));
+        return view('articles.show', compact('article'));
     }
 }
