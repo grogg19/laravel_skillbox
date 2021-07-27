@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\ArticlesController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'ArticlesController@index')->name('page.main');
+Route::get('/', [ArticlesController::class, 'index'])->name('page.main');
 Route::get('/articles/create', 'ArticlesController@create')->name('article.create');
 Route::post('/articles/store', 'ArticlesController@store')->name('article.save');
 Route::get('/articles/{slug}', 'ArticlesController@show')->name('article.show');
