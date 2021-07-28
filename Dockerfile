@@ -14,25 +14,23 @@ RUN apt-get upgrade -y
 
 RUN apt-get install -y zip unzip
 
-RUN apt install php8.0-common -y
-RUN apt install php8.0-cli -y
-RUN apt-get install php8.0-fpm
+RUN apt install php7.4-common -y
+RUN apt install php7.4-cli -y
+RUN apt-get install php7.4-fpm
 
 
 RUN apt-get install -y \
-    php8.0-curl \
-    php8.0-intl \
-    php8.0-mysql \
-    php8.0-readline \
-    php8.0-xml \
-    php8.0-mbstring \
-    php8.0-gd \
-    php8.0-imagick \
-    php8.0-opcache
+    php7.4-curl \
+    php7.4-intl \
+    php7.4-mysql \
+    php7.4-readline \
+    php7.4-xml \
+    php7.4-mbstring \
+    php7.4-gd \
+    php7.4-imagick \
+    php7.4-opcache
 
-#php8-cgi php8-common php8-cli php8-curl php8-intl php8-dev php8-fpm php8-gd php8-imagick php8-mbstring php8-mysql php8-opcache php8-readline php8-xml
-
-RUN apt-get install php8.0-xdebug # Xdebug debugger
+RUN apt-get install php7.4-xdebug # Xdebug debugger
 
 RUN apt-get install nginx -y
 
@@ -56,7 +54,7 @@ ENV DATE_TIMEZONE UTC
 #COPY 000-default.conf /etc/apache2/sites-available/
 
 COPY setups/default_nginx.conf /etc/nginx/sites-available/default
-COPY setups/www_php-fpm.conf /etc/php/8.0/fpm/pool.d/www.conf
+COPY setups/www_php-fpm.conf /etc/php/7.4/fpm/pool.d/www.conf
 
 RUN mkdir /var/log/php
 
@@ -85,10 +83,8 @@ ENV MYSQL_ROOT_PASSWORD=password
 
 # Setup Mysql DB
 COPY db-init.sh /db-init.sh
-RUN chmod +x /db-init.sh
 
-RUN service mysql start
-RUN service php8.0-fpm start
+RUN chmod +x /db-init.sh
 
 COPY cs.sh /usr/sbin
 RUN chmod +x /usr/sbin/cs.sh
@@ -97,4 +93,4 @@ RUN bash /usr/sbin/cs.sh
 
 RUN bash /db-init.sh
 
-#CMD ["/usr/sbin/run-lemp.sh"]
+CMD ["/usr/sbin/run-lemp.sh"]
