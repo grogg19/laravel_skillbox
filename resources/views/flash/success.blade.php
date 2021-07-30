@@ -6,8 +6,7 @@
             </svg>
         </div>
         <div class="toast__content">
-            <h2>Успех! <i class="far fa-thumbs-up"></i></h2>
-            <p>{{ session('status') }}</p>
+            <p><i class="far fa-thumbs-up"></i> {{ session('status') }}</p>
         </div>
     </div>
 </section>

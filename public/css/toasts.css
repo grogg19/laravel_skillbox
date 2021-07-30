@@ -123,7 +123,7 @@
 .toast__content p {
     margin: 0;
     padding: 0;
-    font-size: 1em;
+    font-size: 1.5em;
 }
 
 @keyframes slidein--bottom {
