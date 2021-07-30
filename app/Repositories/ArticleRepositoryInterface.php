@@ -21,4 +21,6 @@ interface ArticleRepositoryInterface
 
     public function updateArticle(Article $article, array $attributes);
 
+    public function deleteArticle(Article $article);
+
 }

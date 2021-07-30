@@ -56,5 +56,9 @@ class ArticleRepository implements ArticleRepositoryInterface
         $article->update($attributes);
     }
 
+    public function deleteArticle(Article $article)
+    {
+        $article->delete();
+    }
 
 }

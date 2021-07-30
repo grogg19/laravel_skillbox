@@ -96,8 +96,11 @@ class ArticlesController extends Controller
             ->with('status', 'Статья успешно обновлена!');
     }
 
-    public function delete()
+    public function destroy(Article $article)
     {
+        $this->articleRepository->deleteArticle($article);
 
+        return redirect(route('article.main'))
+            ->with('status', 'Статья успешно удалена!');
     }
 }
