@@ -32,7 +32,11 @@
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-8 blog-main">
-
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
             @yield('content')
 
         </div><!-- /.blog-main -->
