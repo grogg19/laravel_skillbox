@@ -15,9 +15,17 @@
             </ul>
         </div>
     @endif
-    <form method="post" action="{{ route('article.update', ['article' => $article]) }}">
+    <form method="post" action="{{ route('article.update', $article) }}">
         @csrf
         @method('patch')
         @include('articles.partials.form')
+    </form>
+    <form method="post" action="{{ route('article.destroy', $article) }}">
+        @csrf
+        @method('delete')
+        <div class="form-group mb-4">
+            <a class="btn btn-primary" href="{{ route('article.main') }}">К списку статей</a>
+            <button type="submit" class="btn btn-dark"><i class="fas fa-trash-alt"></i></button>
+        </div>
     </form>
 @endsection
