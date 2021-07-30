@@ -61,7 +61,7 @@ class ArticlesController extends Controller
 
         $this->articleRequest->createArticle($resultValidation);
 
-        return redirect(route('page.main'));
+        return redirect(route('article.main'));
     }
 
     /**

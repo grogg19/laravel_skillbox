@@ -3,7 +3,7 @@
         <div class="row flex-nowrap justify-content-between align-items-center">
 
             <div class="col-10 text-center">
-                <a class="blog-header-logo text-dark" href="{{ route('page.main') }}">Skillbox Laravel</a>
+                <a class="blog-header-logo text-dark" href="{{ route('article.main') }}">Skillbox Laravel</a>
             </div>
             <div class="col-2 d-flex justify-content-end align-items-center">
                 <a class="text-muted" href="#">
