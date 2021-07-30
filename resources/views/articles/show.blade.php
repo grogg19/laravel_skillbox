@@ -8,6 +8,7 @@
     <p class="blog-post-meta">{{ $article->created_at->toFormattedDateString() }}</p>
     {{ $article->body }}
     <p class="my-4">
-        <a href="{{ route('article.main') }}">К списку статей</a>
+        <a class="btn btn-primary" href="{{ route('article.edit', $article) }}">Изменить</a>
+        <a class="btn btn-primary" href="{{ route('article.main') }}">К списку статей</a>
     </p>
 @endsection

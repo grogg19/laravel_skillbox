@@ -31,10 +31,30 @@ class ArticleRepository implements ArticleRepositoryInterface
     }
 
     /**
-     * @param array $data
+     * @param int $id
+     * @return mixed
      */
-    public function createArticle(array $data)
+    public function getArticleById(int $id)
     {
-        Article::create($data);
+        return Article::find($id);
     }
+
+    /**
+     * @param array $attributes
+     */
+    public function createArticle(array $attributes)
+    {
+        Article::create($attributes);
+    }
+
+    /**
+     * @param Article $article
+     * @param array $attributes
+     */
+    public function updateArticle(Article $article, array $attributes)
+    {
+        $article->update($attributes);
+    }
+
+
 }

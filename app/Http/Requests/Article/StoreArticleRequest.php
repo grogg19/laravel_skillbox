@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Article;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreArticleRequest extends FormRequest
 {
@@ -24,8 +25,8 @@ class StoreArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:articles|min:5|max:100',
-            'slug' => 'required|unique:articles',
+            'title' => 'required|min:5|max:100',
+            'slug' => !$this->article ? 'required|unique:articles' : Rule::unique('articles')->ignore($this->article, 'id'),
             'excerpt' => 'required|max:255',
             'body' => 'required',
         ];
@@ -35,7 +36,6 @@ class StoreArticleRequest extends FormRequest
     {
         return [
             'title.required' => 'Поле ":attribute" должно быть заполнено.',
-            'title.unique' => 'Такое значение поля ":attribute" уже существует.',
             'title.max' => 'В поле ":attribute" должно быть меньше :max символов.',
             'title.min' => 'В поле ":attribute" должно быть больше :min символов.',
             'slug.required' => 'Поле ":attribute" должно быть заполнено.',

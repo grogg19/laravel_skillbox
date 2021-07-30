@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Article\StoreArticleRequest;
+use App\Models\Article;
 use App\Repositories\ArticleRepositoryInterface;
 use Illuminate\View\View;
 
@@ -15,15 +16,14 @@ class ArticlesController extends Controller
     /**
      * @var ArticleRepositoryInterface
      */
-    private $articleRequest;
+    private $articleRepository;
 
     /**
-     * ArticlesController constructor.
-     * @param ArticleRepositoryInterface $articleRequest
+     * @param ArticleRepositoryInterface $articleRepository
      */
-    public function __construct(ArticleRepositoryInterface $articleRequest)
+    public function __construct(ArticleRepositoryInterface $articleRepository)
     {
-        $this->articleRequest = $articleRequest;
+        $this->articleRepository = $articleRepository;
     }
 
     /**
@@ -33,7 +33,7 @@ class ArticlesController extends Controller
      */
     public function index(): View
     {
-        $articles = $this->articleRequest->listArticles();
+        $articles = $this->articleRepository->listArticles();
 
         return view('index', compact('articles'));
     }
@@ -47,9 +47,14 @@ class ArticlesController extends Controller
         return view('articles.create');
     }
 
-    public function edit(): View
+    /**
+     * @param $id
+     * @return View
+     */
+    public function edit($id): View
     {
-        return view('articles.edit');
+        $article = $this->articleRepository->getArticleById($id);
+        return view('articles.edit', compact('article'));
     }
 
     /**
@@ -59,12 +64,10 @@ class ArticlesController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
+        $attributes = $request->validated();
+        $attributes['is_published'] = $request->boolean('is_published');
 
-        $resultValidation = $request->validated();
-
-        $resultValidation['is_published'] = $request->boolean('is_published');
-
-        $this->articleRequest->createArticle($resultValidation);
+        $this->articleRepository->createArticle($attributes);
 
         return redirect(route('article.main'))
             ->with('status', 'Новая статья успешно записана!');
@@ -77,14 +80,20 @@ class ArticlesController extends Controller
      */
     public function show(string $slug)
     {
-        $article = $this->articleRequest->getArticleBySlug($slug);
+        $article = $this->articleRepository->getArticleBySlug($slug);
 
         return view('articles.show', compact('article'));
     }
 
-    public function update()
+    public function update(StoreArticleRequest $request, Article $article)
     {
+        $attributes = $request->validated();
+        $attributes['is_published'] = $request->boolean('is_published');
 
+        $this->articleRepository->updateArticle($article, $attributes);
+
+        return redirect(route('article.main'))
+            ->with('status', 'Статья успешно обновлена!');
     }
 
     public function delete()
