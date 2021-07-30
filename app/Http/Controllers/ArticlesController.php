@@ -47,6 +47,11 @@ class ArticlesController extends Controller
         return view('articles.create');
     }
 
+    public function edit(): View
+    {
+        return view('articles.edit');
+    }
+
     /**
      * Store a newly created article in storage.
      * @param StoreArticleRequest $request
@@ -61,7 +66,8 @@ class ArticlesController extends Controller
 
         $this->articleRequest->createArticle($resultValidation);
 
-        return redirect(route('article.main'));
+        return redirect(route('article.main'))
+            ->with('status', 'Новая статья успешно записана!');
     }
 
     /**
@@ -74,5 +80,15 @@ class ArticlesController extends Controller
         $article = $this->articleRequest->getArticleBySlug($slug);
 
         return view('articles.show', compact('article'));
+    }
+
+    public function update()
+    {
+
+    }
+
+    public function delete()
+    {
+
     }
 }
