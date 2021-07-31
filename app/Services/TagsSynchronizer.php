@@ -18,7 +18,7 @@ class TagsSynchronizer
         $modelTags = $model->tags->keyBy('name');
 
         // теги с формы
-        $tags = $tags->keyBy(function ($item) { return $item; });
+        $tags = $tags->keyBy(function ($item) { return trim($item); });
 
         // ids для метода sync()
         $syncIds = $modelTags->intersectByKeys($tags)->pluck('id')->toArray();
