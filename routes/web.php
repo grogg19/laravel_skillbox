@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ArticlesController::class, 'index'])->name('article.main');
+
+Route::get('/articles/tags/{tag}', [TagsController::class, 'index'])->name('tags.selectByTag');
 
 Route::resource('article', 'ArticlesController');
 

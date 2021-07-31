@@ -41,10 +41,11 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     /**
      * @param array $attributes
+     * @return Article
      */
-    public function createArticle(array $attributes)
+    public function createArticle(array $attributes): Article
     {
-        Article::create($attributes);
+        return Article::create($attributes);
     }
 
     /**

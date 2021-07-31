@@ -14,6 +14,20 @@
     <label for="body">Текст статьи:</label>
     <textarea class="form-control" id="body" rows="3" name="body">{{ old('body', $article->body ?? '') }}</textarea>
 </div>
+<div class="form-group">
+    <label for="tags">Теги:</label>
+    <input type="text"
+           class="form-control"
+           id="tags"
+           name="tags"
+           placeholder="Теги"
+           @if(isset($article))
+           value="{{ old('tags', $article->tags->pluck('name')->implode(',')) }}" />
+           @else
+           value="{{ old('tags')}}" />
+           @endif
+
+</div>
 <div class="custom-control custom-checkbox form-group">
     <input type="checkbox" class="custom-control-input" id="is_published" name="is_published" {{ old('is_published', $article->is_published ?? '') ? 'checked' : '' }}>
     <label class="custom-control-label" for="is_published">Опубликовать</label>
