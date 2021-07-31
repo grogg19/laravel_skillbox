@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArticlesTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->unsignedInteger('id', true);
-            $table->string('title', 191);
-            $table->string('slug')->unique();
-            $table->text('excerpt');
-            $table->text('body');
-            $table->boolean('is_published')->default(0);
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('tags');
     }
 }
