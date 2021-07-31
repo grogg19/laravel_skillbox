@@ -6,6 +6,7 @@ use App\Http\Requests\Article\StoreArticleRequest;
 use App\Models\Article;
 use App\Models\Tag;
 use App\Repositories\ArticleRepositoryInterface;
+use App\Services\TagsSynchronizer;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 
@@ -64,30 +65,16 @@ class ArticlesController extends Controller
      * @param StoreArticleRequest $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(StoreArticleRequest $request)
+    public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer)
     {
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
 
         $article = $this->articleRepository->createArticle($attributes);
 
-        /** @var Collection $articleTags */
-        $articleTags = $article->tags->keyBy('name');
+        $tags = collect(explode(',', $request->post('tags')));
 
-        // теги с формы
-        $tags = collect(explode(',', $request->post('tags')))->keyBy(function ($item) { return $item; });
-
-        // ids для метода sync()
-        $syncIds = $articleTags->intersectByKeys($tags)->pluck('id')->toArray();
-
-        $tagsToAttach = $tags->diffKeys($articleTags);
-
-        foreach ($tagsToAttach as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $syncIds[] = $tag->id;
-        }
-
-        $article->tags()->sync($syncIds);
+        $tagsSynchronizer->sync($tags, $article);
 
         return redirect(route('article.main'))
             ->with('status', 'Новая статья успешно записана!');
@@ -105,30 +92,16 @@ class ArticlesController extends Controller
         return view('articles.show', compact('article'));
     }
 
-    public function update(StoreArticleRequest $request, Article $article)
+    public function update(StoreArticleRequest $request, Article $article, TagsSynchronizer $tagsSynchronizer)
     {
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
 
         $this->articleRepository->updateArticle($article, $attributes);
 
-        /** @var Collection $articleTags */
-        $articleTags = $article->tags->keyBy('name');
+        $tags = collect(explode(',', $request->post('tags')));
 
-        // теги с формы
-        $tags = collect(explode(',', $request->post('tags')))->keyBy(function ($item) { return $item; });
-
-        // ids для метода sync()
-        $syncIds = $articleTags->intersectByKeys($tags)->pluck('id')->toArray();
-
-        $tagsToAttach = $tags->diffKeys($articleTags);
-
-        foreach ($tagsToAttach as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $syncIds[] = $tag->id;
-        }
-
-        $article->tags()->sync($syncIds);
+        $tagsSynchronizer->sync($tags, $article);
 
         return redirect(route('article.main'))
             ->with('status', 'Статья успешно обновлена!');
