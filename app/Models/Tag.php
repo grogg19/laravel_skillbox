@@ -16,6 +16,22 @@ class Tag extends Model
 
     public function articles()
     {
-        return $this->belongsToMany('articles');
+        return $this->belongsToMany(Article::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function tagsCloud()
+    {
+        return (new static())->has('articles')->get();
+    }
+
+    /**
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'name';
     }
 }
