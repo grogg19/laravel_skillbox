@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Article\StoreArticleRequest;
+use App\Http\Requests\Tags\TagRequest;
 use App\Models\Article;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Services\TagsSynchronizer;
@@ -64,16 +65,14 @@ class ArticlesController extends Controller
      * @param TagsSynchronizer $tagsSynchronizer
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer)
+    public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
     {
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
 
         $article = $this->articleRepository->createArticle($attributes);
 
-        $tags = collect(
-            array_map('trim', explode(',', $request->post('tags')))
-        );
+        $tags = $tagsRequest->getTags($request);
 
         $tagsSynchronizer->sync($tags, $article);
 
@@ -97,18 +96,17 @@ class ArticlesController extends Controller
      * @param StoreArticleRequest $request
      * @param Article $article
      * @param TagsSynchronizer $tagsSynchronizer
+     * @param TagRequest $tagsRequest
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(StoreArticleRequest $request, Article $article, TagsSynchronizer $tagsSynchronizer)
+    public function update(StoreArticleRequest $request, Article $article, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
     {
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
 
         $this->articleRepository->updateArticle($article, $attributes);
 
-        $tags = collect(
-            array_map('trim', explode(',', $request->post('tags')))
-        );
+        $tags = $tagsRequest->getTags($request);
 
         $tagsSynchronizer->sync($tags, $article);
 
