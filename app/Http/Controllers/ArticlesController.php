@@ -69,7 +69,25 @@ class ArticlesController extends Controller
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
 
-        $this->articleRepository->createArticle($attributes);
+        $article = $this->articleRepository->createArticle($attributes);
+
+        /** @var Collection $articleTags */
+        $articleTags = $article->tags->keyBy('name');
+
+        // теги с формы
+        $tags = collect(explode(',', $request->post('tags')))->keyBy(function ($item) { return $item; });
+
+        // ids для метода sync()
+        $syncIds = $articleTags->intersectByKeys($tags)->pluck('id')->toArray();
+
+        $tagsToAttach = $tags->diffKeys($articleTags);
+
+        foreach ($tagsToAttach as $tag) {
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $syncIds[] = $tag->id;
+        }
+
+        $article->tags()->sync($syncIds);
 
         return redirect(route('article.main'))
             ->with('status', 'Новая статья успешно записана!');
