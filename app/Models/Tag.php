@@ -22,7 +22,7 @@ class Tag extends Model
     /**
      * @return mixed
      */
-    public function tagsCloud()
+    public static function tagsCloud()
     {
         return (new static())->has('articles')->get();
     }
