@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Article\StoreArticleRequest;
 use App\Models\Article;
-use App\Models\Tag;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Services\TagsSynchronizer;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 
 /**
@@ -63,6 +61,7 @@ class ArticlesController extends Controller
     /**
      * Store a newly created article in storage.
      * @param StoreArticleRequest $request
+     * @param TagsSynchronizer $tagsSynchronizer
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer)
@@ -92,6 +91,12 @@ class ArticlesController extends Controller
         return view('articles.show', compact('article'));
     }
 
+    /**
+     * @param StoreArticleRequest $request
+     * @param Article $article
+     * @param TagsSynchronizer $tagsSynchronizer
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function update(StoreArticleRequest $request, Article $article, TagsSynchronizer $tagsSynchronizer)
     {
         $attributes = $request->validated();
@@ -107,6 +112,10 @@ class ArticlesController extends Controller
             ->with('status', 'Статья успешно обновлена!');
     }
 
+    /**
+     * @param Article $article
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function destroy(Article $article)
     {
         $this->articleRepository->deleteArticle($article);
