@@ -17,6 +17,8 @@
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <link href="{{ asset('css/blog.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/toasts.css') }}" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" rel="stylesheet">
 </head>
 
 <body>
@@ -32,7 +34,9 @@
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-8 blog-main">
-
+            @if (session('status'))
+                @include('flash.success')
+            @endif
             @yield('content')
 
         </div><!-- /.blog-main -->

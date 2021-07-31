@@ -122,3 +122,21 @@ if(sourceSlugify) {
         targetSlugify.value = slugify(sourceSlugify.value);
     }
 }
+
+const flashMessage = document.querySelector('.flash-message');
+
+if (flashMessage) {
+    let toastTimeout;
+    let toast = document.querySelector(".flash-message");
+
+    toast.classList.add("toast--active");
+    toastTimeout = setTimeout(() => {
+        toast.classList.remove("toast--active");
+    }, 3500);
+
+    toast.addEventListener("click", () => {
+        toast.classList.remove("toast--active");
+        clearTimeout(toastTimeout);
+    });
+}
+
