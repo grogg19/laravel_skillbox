@@ -72,7 +72,7 @@ class ArticlesController extends Controller
         $article = $this->articleRepository->createArticle($attributes);
 
         $tags = collect(
-            explode(',', $request->post('tags'))
+            array_map('trim', explode(',', $request->post('tags')))
         );
 
         $tagsSynchronizer->sync($tags, $article);
@@ -107,7 +107,7 @@ class ArticlesController extends Controller
         $this->articleRepository->updateArticle($article, $attributes);
 
         $tags = collect(
-            explode(',', $request->post('tags'))
+            array_map('trim', explode(',', $request->post('tags')))
         );
 
         $tagsSynchronizer->sync($tags, $article);
