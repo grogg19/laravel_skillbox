@@ -2,17 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\HasTags;
 use App\Models\Tag;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class TagsSynchronizer
 {
     /**
      * @param Collection $tags
-     * @param Model $model
+     * @param HasTags $model
      */
-    public function sync(Collection $tags, Model $model)
+    public function sync(Collection $tags, HasTags $model)
     {
         /** @var Collection $modelTags */
         $modelTags = $model->tags->keyBy('name');

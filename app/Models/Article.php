@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Article
  * @package App\Models
  */
-class Article extends Model
+class Article extends Model implements HasTags
 {
     use HasFactory;
 
