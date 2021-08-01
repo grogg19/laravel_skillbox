@@ -21,11 +21,7 @@
            id="tags"
            name="tags"
            placeholder="Теги"
-           @if(isset($article))
-           value="{{ old('tags', $article->tags->pluck('name')->implode(',')) }}" />
-           @else
-           value="{{ old('tags')}}" />
-           @endif
+           value="{{ old('tags', isset($article->tags) ? $article->tags->pluck('name')->implode(',') : '') }}" />
 
 </div>
 <div class="custom-control custom-checkbox form-group">
