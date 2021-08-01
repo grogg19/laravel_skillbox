@@ -20,14 +20,6 @@ class Tag extends Model
     }
 
     /**
-     * @return mixed
-     */
-    public static function tagsCloud()
-    {
-        return (new static())->has('articles')->get();
-    }
-
-    /**
      * @return string
      */
     public function getRouteKeyName()

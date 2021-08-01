@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Tag;
+use App\Repositories\TagRepository;
+use App\Repositories\TagRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Repositories\ArticleRepository;
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
         $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
+        $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
     }
 
     /**
@@ -30,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('partials.sidebar', function($view) {
-            $view->with('tagsCloud', Tag::tagsCloud());
+            $view->with('tagsCloud', app(TagRepositoryInterface::class)->tagsCloud());
         });
     }
 }
