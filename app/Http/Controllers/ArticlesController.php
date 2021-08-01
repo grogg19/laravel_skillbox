@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Article\StoreArticleRequest;
+use App\Http\Requests\Tags\TagRequest;
 use App\Models\Article;
 use App\Repositories\ArticleRepositoryInterface;
+use App\Services\TagsSynchronizer;
 use Illuminate\View\View;
 
 /**
@@ -60,14 +62,19 @@ class ArticlesController extends Controller
     /**
      * Store a newly created article in storage.
      * @param StoreArticleRequest $request
+     * @param TagsSynchronizer $tagsSynchronizer
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(StoreArticleRequest $request)
+    public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
     {
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
 
-        $this->articleRepository->createArticle($attributes);
+        $article = $this->articleRepository->createArticle($attributes);
+
+        $tags = $tagsRequest->getTags($request);
+
+        $tagsSynchronizer->sync($tags, $article);
 
         return redirect(route('article.main'))
             ->with('status', 'Новая статья успешно записана!');
@@ -85,17 +92,32 @@ class ArticlesController extends Controller
         return view('articles.show', compact('article'));
     }
 
-    public function update(StoreArticleRequest $request, Article $article)
+    /**
+     * @param StoreArticleRequest $request
+     * @param Article $article
+     * @param TagsSynchronizer $tagsSynchronizer
+     * @param TagRequest $tagsRequest
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update(StoreArticleRequest $request, Article $article, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
     {
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
 
         $this->articleRepository->updateArticle($article, $attributes);
 
+        $tags = $tagsRequest->getTags($request);
+
+        $tagsSynchronizer->sync($tags, $article);
+
         return redirect(route('article.main'))
             ->with('status', 'Статья успешно обновлена!');
     }
 
+    /**
+     * @param Article $article
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function destroy(Article $article)
     {
         $this->articleRepository->deleteArticle($article);

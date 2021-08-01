@@ -9,10 +9,15 @@ use Illuminate\Database\Eloquent\Model;
  * Class Article
  * @package App\Models
  */
-class Article extends Model
+class Article extends Model implements HasTags
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 
 }
