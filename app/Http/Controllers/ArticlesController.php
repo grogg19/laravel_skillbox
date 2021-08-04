@@ -53,9 +53,12 @@ class ArticlesController extends Controller
     /**
      * @param Article $article
      * @return View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Article $article): View
     {
+        $this->authorize('update', $article);
+
         $article = $this->articleRepository->getArticleById($article->id);
         return view('articles.edit', compact('article'));
     }
@@ -101,6 +104,7 @@ class ArticlesController extends Controller
      * @param TagsSynchronizer $tagsSynchronizer
      * @param TagRequest $tagsRequest
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(StoreArticleRequest $request, Article $article, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
     {
@@ -122,6 +126,7 @@ class ArticlesController extends Controller
     /**
      * @param Article $article
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Article $article)
     {
