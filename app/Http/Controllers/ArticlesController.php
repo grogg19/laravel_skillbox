@@ -25,6 +25,7 @@ class ArticlesController extends Controller
      */
     public function __construct(ArticleRepositoryInterface $articleRepository)
     {
+        $this->middleware(['auth'])->except(['index', 'show']);
         $this->articleRepository = $articleRepository;
     }
 
@@ -50,12 +51,12 @@ class ArticlesController extends Controller
     }
 
     /**
-     * @param $id
+     * @param Article $article
      * @return View
      */
-    public function edit($id): View
+    public function edit(Article $article): View
     {
-        $article = $this->articleRepository->getArticleById($id);
+        $article = $this->articleRepository->getArticleById($article->id);
         return view('articles.edit', compact('article'));
     }
 
@@ -63,6 +64,7 @@ class ArticlesController extends Controller
      * Store a newly created article in storage.
      * @param StoreArticleRequest $request
      * @param TagsSynchronizer $tagsSynchronizer
+     * @param TagRequest $tagsRequest
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
@@ -102,6 +104,8 @@ class ArticlesController extends Controller
      */
     public function update(StoreArticleRequest $request, Article $article, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
     {
+        $this->authorize('update', $article);
+
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
 
@@ -121,6 +125,8 @@ class ArticlesController extends Controller
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
+
         $this->articleRepository->deleteArticle($article);
 
         return redirect(route('article.main'))
