@@ -69,6 +69,7 @@ class ArticlesController extends Controller
     {
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
+        $attributes['owner_id'] = auth()->id();
 
         $article = $this->articleRepository->createArticle($attributes);
 
