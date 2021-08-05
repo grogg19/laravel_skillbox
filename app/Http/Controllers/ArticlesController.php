@@ -51,15 +51,15 @@ class ArticlesController extends Controller
     }
 
     /**
-     * @param Article $article
+     * @param $id
      * @return View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit(Article $article): View
+    public function edit($id): View
     {
+        $article = $this->articleRepository->getArticleById($id);
         $this->authorize('update', $article);
 
-        $article = $this->articleRepository->getArticleById($article->id);
         return view('articles.edit', compact('article'));
     }
 
