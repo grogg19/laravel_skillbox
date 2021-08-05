@@ -10,6 +10,14 @@
         "production": "mix --production"
     },
     "devDependencies": {
-
+        "alpinejs": "^3.2.3",
+        "bootstrap": "^4.6.0",
+        "jquery": "^3.6",
+        "laravel-mix": "^6.0.27",
+        "popper.js": "^1.16.1",
+        "resolve-url-loader": "^4.0.0",
+        "sass": "^1.32.11",
+        "axios": "^0.21.1",
+        "sass-loader": "^11.0.1"
     }
 }
