@@ -1,5 +1,5 @@
-<div class="min-h-screen flex flex-col items-center pt-6 sm:pt-0 mt-5">
-    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-lg overflow-hidden sm:rounded-lg">
+<div class="d-flex flex-column align-items-center min-vh-100 mt-5">
+    <div class="mt-6 py-4 bg-white shadow-lg overflow-hidden rounded w-50">
         {{ $slot }}
     </div>
 </div>
