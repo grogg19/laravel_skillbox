@@ -17,3 +17,5 @@ Route::post('/contacts/store', 'MessagesController@store')->name('message.save')
 Route::get('/about/', function () {
     return view('about');
 })->name('page.about');
+
+require __DIR__.'/auth.php';

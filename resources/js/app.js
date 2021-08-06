@@ -1,1 +1,3 @@
-require('./bootstrap');
+require('./lodash')
+require('alpinejs');
+

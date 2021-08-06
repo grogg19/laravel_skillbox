@@ -11,7 +11,9 @@
     <p class="blog-post-meta">{{ $article->created_at->toFormattedDateString() }}</p>
     {{ $article->body }}
     <p class="my-4">
+        @can('update', $article)
         <a class="btn btn-primary" href="{{ route('article.edit', $article) }}">Изменить</a>
+        @endcan
         <a class="btn btn-primary" href="{{ route('article.main') }}">К списку статей</a>
     </p>
 @endsection

@@ -25,6 +25,7 @@ class ArticlesController extends Controller
      */
     public function __construct(ArticleRepositoryInterface $articleRepository)
     {
+        $this->middleware(['auth'])->except(['index', 'show']);
         $this->articleRepository = $articleRepository;
     }
 
@@ -52,10 +53,13 @@ class ArticlesController extends Controller
     /**
      * @param $id
      * @return View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit($id): View
     {
         $article = $this->articleRepository->getArticleById($id);
+        $this->authorize('update', $article);
+
         return view('articles.edit', compact('article'));
     }
 
@@ -63,12 +67,14 @@ class ArticlesController extends Controller
      * Store a newly created article in storage.
      * @param StoreArticleRequest $request
      * @param TagsSynchronizer $tagsSynchronizer
+     * @param TagRequest $tagsRequest
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
     {
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
+        $attributes['owner_id'] = auth()->id();
 
         $article = $this->articleRepository->createArticle($attributes);
 
@@ -98,9 +104,12 @@ class ArticlesController extends Controller
      * @param TagsSynchronizer $tagsSynchronizer
      * @param TagRequest $tagsRequest
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(StoreArticleRequest $request, Article $article, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
     {
+        $this->authorize('update', $article);
+
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
 
@@ -117,9 +126,12 @@ class ArticlesController extends Controller
     /**
      * @param Article $article
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
+
         $this->articleRepository->deleteArticle($article);
 
         return redirect(route('article.main'))

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-{{--    <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">--}}
+    {{--    <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">--}}
 
     <title>@yield('title', 'Laravel Skillbox')</title>
 
@@ -37,15 +37,13 @@
 
 <main role="main" class="container">
     <div class="row">
-        <div class="col-md-8 blog-main">
-            @if (session('status'))
-                @include('flash.success')
-            @endif
+        <div class="col-md-12 blog-main">
+
             @yield('content')
 
         </div><!-- /.blog-main -->
 
-        @include('partials/sidebar')
+
 
     </div><!-- /.row -->
 

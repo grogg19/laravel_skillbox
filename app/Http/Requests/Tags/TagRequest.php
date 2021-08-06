@@ -39,7 +39,9 @@ class TagRequest extends FormRequest
         $tagsArray = explode(',', $request->post('tags'));
         $tagsArray = array_map('trim', $tagsArray);
 
-        return collect($tagsArray);
+        return collect($tagsArray)->reject(function($name) {
+            return empty($name); // вычищаем пустые элементы из коллекции
+        });
     }
 
 }
