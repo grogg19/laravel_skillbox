@@ -1,4 +1,3 @@
-
 @extends('layout.main_without_sidebar')
 
 @section('content')
@@ -7,31 +6,24 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('password.update') }}">
         @csrf
 
-        <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
+        <!-- Password Reset Token -->
+            <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
             <!-- Email Address -->
-            <div class="mt-4">
+            <div>
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="" type="email" name="email" :value="old('email')" required />
+                <x-input id="email" class="" type="email" name="email" :value="old('email', $request->email)" required autofocus />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />
 
-                <x-input id="password" class=""
-                         type="password"
-                         name="password"
-                         required autocomplete="new-password" />
+                <x-input id="password" class="" type="password" name="password" required />
             </div>
 
             <!-- Confirm Password -->
@@ -44,12 +36,8 @@
             </div>
 
             <div class="d-flex justify-content-end mt-4">
-                <a class="text-muted" href="{{ route('login') }}" style="margin-right: 15px; margin-top: 15px;">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
+                <x-button>
+                    {{ __('Reset Password') }}
                 </x-button>
             </div>
         </form>

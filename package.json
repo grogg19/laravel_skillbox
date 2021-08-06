@@ -11,13 +11,12 @@
     },
     "devDependencies": {
         "alpinejs": "^3.2.3",
-        "bootstrap": "^4.6.0",
-        "jquery": "^3.6",
-        "laravel-mix": "^6.0.27",
-        "popper.js": "^1.16.1",
-        "resolve-url-loader": "^4.0.0",
-        "sass": "^1.32.11",
         "axios": "^0.21.1",
-        "sass-loader": "^11.0.1"
+        "bootstrap": "^5.1.0",
+        "laravel-mix": "^6.0.6",
+        "resolve-url-loader": "^4.0.0",
+        "sass": "^1.37.5",
+        "sass-loader": "^12.1.0",
+        "@popperjs/core": "^2.9.3"
     }
 }
