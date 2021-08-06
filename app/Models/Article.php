@@ -22,7 +22,7 @@ class Article extends Model implements HasTags
 
     public function users()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
 }
