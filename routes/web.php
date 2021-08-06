@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\TagsController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ArticlesController::class, 'index'])->name('article.main');
@@ -19,4 +18,8 @@ Route::get('/about/', function () {
     return view('about');
 })->name('page.about');
 
-Auth::routes();
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
