@@ -9,8 +9,6 @@
 
     <title>@yield('title', 'Laravel Skillbox')</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/blog/">
-
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
