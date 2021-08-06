@@ -22,7 +22,6 @@
     <link href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" rel="stylesheet">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 
 <body>
