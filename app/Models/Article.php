@@ -20,7 +20,7 @@ class Article extends Model implements HasTags
         return $this->belongsToMany(Tag::class);
     }
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
