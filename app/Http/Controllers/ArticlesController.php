@@ -51,13 +51,14 @@ class ArticlesController extends Controller
     }
 
     /**
-     * @param $slug
+     * @param $articleKey
      * @return View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit($slug): View
+    public function edit($articleKey): View
     {
-        $article = $this->articleRepository->getArticleBySlug($slug);
+        $article = is_numeric($articleKey) ? $this->articleRepository->getArticleById($articleKey)
+            : $this->articleRepository->getArticleBySlug($articleKey);
 
         $this->authorize('update', $article);
 
@@ -89,12 +90,13 @@ class ArticlesController extends Controller
 
     /**
      * Display the specified article.
-     * @param string $slug
+     * @param $articleKey
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(string $slug)
+    public function show($articleKey)
     {
-        $article = $this->articleRepository->getArticleBySlug($slug);
+        $article = is_numeric($articleKey) ? $this->articleRepository->getArticleById($articleKey)
+            : $this->articleRepository->getArticleBySlug($articleKey);
 
         return view('articles.show', compact('article'));
     }
