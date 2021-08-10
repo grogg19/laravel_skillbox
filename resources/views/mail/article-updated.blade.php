@@ -6,7 +6,7 @@
 Краткое описание:
 {{ $article->excerpt }}
 
-@component('mail::button', ['url' => route('article.show', $article->slug)])
+@component('mail::button', ['url' => route('article.show', $article)])
 Ссылка на статью
 @endcomponent
 

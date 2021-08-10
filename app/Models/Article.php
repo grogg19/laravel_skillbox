@@ -24,6 +24,11 @@ class Article extends Model implements HasTags
         'deleted' => ArticleDeleted::class
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
