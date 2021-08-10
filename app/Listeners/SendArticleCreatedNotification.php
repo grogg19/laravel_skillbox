@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Mail;
 
 class SendArticleCreatedNotification
 {
-
     /**
      * Handle the event.
      *

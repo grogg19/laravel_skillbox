@@ -17,7 +17,7 @@ class SendArticleDeletedNotification
     {
         if(!empty(env('ADMIN_EMAIL'))) {
             Mail::to(env('ADMIN_EMAIL'))->send(
-                new \App\Mail\Articles\ArticleCreated($event->article)
+                new \App\Mail\Articles\ArticleDeleted($event->article)
             );
         }
     }
