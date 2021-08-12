@@ -132,7 +132,6 @@ if (flashMessage) {
     toast.classList.add("toast--active");
     toastTimeout = setTimeout(() => {
         toast.classList.remove("toast--active");
-        alert(123);
     }, 3500);
     toast.addEventListener("click", () => {
         toast.classList.remove("toast--active");
