@@ -1,4 +1,5 @@
 <?php
 return [
-    'email' => env('ADMIN_EMAIL')
+    'email' => 'admin@mail.ru',
+    'password' => '12345678'
 ];
