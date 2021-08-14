@@ -11,6 +11,15 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class ArticleRepository implements ArticleRepositoryInterface
 {
+
+    /**
+     * @return mixed
+     */
+    public function listAllArticles()
+    {
+        return Article::latest()->get();
+    }
+
     /**
      * @return mixed
      */

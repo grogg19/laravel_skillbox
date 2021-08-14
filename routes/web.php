@@ -18,4 +18,6 @@ Route::get('/about/', function () {
     return view('about');
 })->name('page.about');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/admin.php';
+
+require __DIR__ . '/auth.php';
