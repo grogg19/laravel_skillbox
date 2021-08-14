@@ -17,11 +17,13 @@ class CreateUserRolesTable extends Migration
         Schema::create('user_roles', function (Blueprint $table) {
             $table->unsignedInteger('id', true);
             $table->string('name')->unique()->nullable(false);
+            $table->string('slug')->unique()->nullable(false);
             $table->timestamps();
         });
 
         DB::table('user_roles')->insert([
-           'name' => 'Администратор'
+            'name' => 'Администратор',
+            'slug' => 'admin'
         ]);
 
     }
