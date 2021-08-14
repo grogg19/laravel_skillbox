@@ -28,6 +28,6 @@
     <input type="checkbox" class="custom-control-input" id="is_published" name="is_published" {{ old('is_published', $article->is_published ?? '') ? 'checked' : '' }}>
     <label class="custom-control-label" for="is_published">Опубликовать</label>
 </div>
-<div class="form-group mb-4">
+<div class="form-group mb-5">
     <button type="submit" class="btn btn-primary">Сохранить</button>
 </div>
