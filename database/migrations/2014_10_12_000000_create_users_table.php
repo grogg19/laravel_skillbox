@@ -32,7 +32,6 @@ class CreateUsersTable extends Migration
             'password' => Hash::make(config('admin.password')),
             'role_id' => 1
         ]);
-        //DB::table('users')->insert();
     }
 
     /**
