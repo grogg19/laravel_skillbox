@@ -6,6 +6,6 @@
     <p class="blog-post-meta">{{ $article->created_at->toFormattedDateString() }}</p>
     <p>{{ $article->excerpt }}</p>
     <p class="my-4">
-        <a class="btn btn-primary" href="{{ route('admin.article.edit', $article) }}">Изменить</a>
+        <a class="btn btn-primary" href="{{ route('admin.article.show', $article) }}">Показать</a>
     </p>
 </div>

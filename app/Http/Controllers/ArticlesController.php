@@ -92,6 +92,8 @@ class ArticlesController extends Controller
         $article = is_numeric($articleKey) ? $this->articleRepository->getArticleById($articleKey)
             : $this->articleRepository->getArticleBySlug($articleKey);
 
+        $this->authorize('show', $article);
+
         return view('articles.show', compact('article'));
     }
 
