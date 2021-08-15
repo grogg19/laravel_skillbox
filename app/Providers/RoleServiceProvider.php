@@ -24,16 +24,8 @@ class RoleServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::directive('admin', function () {
-            return '<?php if (auth()->check() && auth()->user()->isAdmin()) { ?>';
-        });
-
-        Blade::directive('elseadmin', function () {
-            return '<?php } else { ?>';
-        });
-
-        Blade::directive('endadmin', function () {
-            return '<?php } ?>';
+        Blade::if('admin', function () {
+            return auth()->check() && auth()->user()->isAdmin();
         });
     }
 }

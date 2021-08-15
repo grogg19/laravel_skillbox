@@ -17,11 +17,10 @@ class HasAdminRole
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->isAdmin())
-        {
+        if (auth()->check() && auth()->user()->isAdmin()) {
             return $next($request);
         }
 
-        return redirect('/login');
+        return redirect(route('login'));
     }
 }

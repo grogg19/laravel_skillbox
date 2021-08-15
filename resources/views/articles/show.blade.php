@@ -14,7 +14,7 @@
         @can('update', $article)
             @admin
                 <a class="btn btn-primary" href="{{ route('admin.article.edit', $article) }}">Изменить</a>
-            @elseadmin
+            @else
                 <a class="btn btn-primary" href="{{ route('article.edit', $article) }}">Изменить</a>
             @endadmin
         @endcan
