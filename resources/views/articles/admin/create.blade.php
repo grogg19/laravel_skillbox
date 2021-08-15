@@ -4,10 +4,10 @@
 
 @section('content')
     <h3 class="pb-3 mb-4 font-italic border-bottom">
-        Добавление новой статьи
+        Административный раздел | создание новой статьи
     </h3>
     @include('errors.list')
-    <form method="post" action="{{ route('article.store') }}">
+    <form method="post" action="{{ route('admin.article.store') }}">
         @csrf
         @include('articles.partials.form')
     </form>

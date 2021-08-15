@@ -1,10 +1,10 @@
 @extends('layout.main')
 
-@section('title', 'Статья | ' . $article->title )
+@section('title', 'Администрирование статьи | ' . $article->title )
 
 @section('content')
     <div class="mb-4 font-italic border-bottom"></div>
-    <h1>{{ $article->title }}</h1>
+    <h1>Администрирование | {{ $article->title }}</h1>
 
     @include('tags.list', ['tags' => $article->tags])
 
@@ -12,8 +12,8 @@
     {{ $article->body }}
     <p class="my-4">
         @can('update', $article)
-        <a class="btn btn-primary" href="{{ route('article.edit', $article) }}">Изменить</a>
+        <a class="btn btn-primary" href="{{ route('admin.article.edit', $article) }}">Изменить</a>
         @endcan
-        <a class="btn btn-primary" href="{{ route('article.main') }}">К списку статей</a>
+        <a class="btn btn-primary" href="{{ route('admin.article.index') }}">К списку статей</a>
     </p>
 @endsection

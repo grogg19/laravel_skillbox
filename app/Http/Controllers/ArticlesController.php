@@ -6,6 +6,7 @@ use App\Http\Requests\Article\StoreArticleRequest;
 use App\Http\Requests\Tags\TagRequest;
 use App\Models\Article;
 use App\Repositories\ArticleRepositoryInterface;
+use App\Services\ArticleStore;
 use App\Services\TagsSynchronizer;
 use Illuminate\View\View;
 
@@ -72,17 +73,9 @@ class ArticlesController extends Controller
      * @param TagRequest $tagsRequest
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
+    public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest, ArticleStore $articleStore)
     {
-        $attributes = $request->validated();
-        $attributes['is_published'] = $request->boolean('is_published');
-        $attributes['owner_id'] = auth()->id();
-
-        $article = $this->articleRepository->createArticle($attributes);
-
-        $tags = $tagsRequest->getTags($request);
-
-        $tagsSynchronizer->sync($tags, $article);
+        $articleStore->create($request, $tagsSynchronizer, $tagsRequest, $this->articleRepository);
 
         return redirect(route('article.main'))
             ->with('status', 'Новая статья успешно записана!');
@@ -109,18 +102,11 @@ class ArticlesController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(StoreArticleRequest $request, Article $article, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest)
+    public function update(StoreArticleRequest $request, Article $article, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest, ArticleStore $articleStore)
     {
         $this->authorize('update', $article);
 
-        $attributes = $request->validated();
-        $attributes['is_published'] = $request->boolean('is_published');
-
-        $this->articleRepository->updateArticle($article, $attributes);
-
-        $tags = $tagsRequest->getTags($request);
-
-        $tagsSynchronizer->sync($tags, $article);
+        $articleStore->update($request, $tagsSynchronizer, $tagsRequest, $this->articleRepository, $article);
 
         return redirect(route('article.main'))
             ->with('status', 'Статья успешно обновлена!');
