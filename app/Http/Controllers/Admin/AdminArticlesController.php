@@ -1,45 +1,35 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Article\StoreArticleRequest;
 use App\Http\Requests\Tags\TagRequest;
 use App\Models\Article;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Services\ArticleStore;
 use App\Services\TagsSynchronizer;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-/**
- * Class ArticlesController
- * @package App\Http\Controllers
- */
-class ArticlesController extends Controller
+class AdminArticlesController extends Controller
 {
     /**
      * @var ArticleRepositoryInterface
      */
     private $articleRepository;
 
-    /**
-     * @param ArticleRepositoryInterface $articleRepository
-     */
     public function __construct(ArticleRepositoryInterface $articleRepository)
     {
-        $this->middleware(['auth'])->except(['index', 'show']);
+        $this->middleware(['admin']);
         $this->articleRepository = $articleRepository;
     }
 
-    /**
-     * Display a listing of the articles.
-     *
-     * @return View
-     */
-    public function index(): View
+    public function index()
     {
-        $articles = $this->articleRepository->listArticles();
+        $articles = $this->articleRepository->listAllArticles();
 
-        return view('index', compact('articles'));
+        return view('articles.admin.list', compact('articles'));
     }
 
     /**
@@ -48,7 +38,7 @@ class ArticlesController extends Controller
      */
     public function create(): View
     {
-        return view('articles.create');
+        return view('articles.admin.create');
     }
 
     /**
@@ -63,22 +53,14 @@ class ArticlesController extends Controller
 
         $this->authorize('update', $article);
 
-        return view('articles.edit', compact('article'));
+        return view('articles.admin.edit', compact('article'));
     }
 
-    /**
-     * Store a newly created article in storage.
-     * @param StoreArticleRequest $request
-     * @param TagsSynchronizer $tagsSynchronizer
-     * @param TagRequest $tagsRequest
-     * @param ArticleStore $articleStore
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
     public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest, ArticleStore $articleStore)
     {
         $articleStore->create($request, $tagsSynchronizer, $tagsRequest, $this->articleRepository);
 
-        return redirect(route('article.main'))
+        return redirect(route('admin.article.index'))
             ->with('status', 'Новая статья успешно записана!');
     }
 
@@ -92,9 +74,7 @@ class ArticlesController extends Controller
         $article = is_numeric($articleKey) ? $this->articleRepository->getArticleById($articleKey)
             : $this->articleRepository->getArticleBySlug($articleKey);
 
-        $this->authorize('show', $article);
-
-        return view('articles.show', compact('article'));
+        return view('articles.admin.show', compact('article'));
     }
 
     /**
@@ -112,7 +92,7 @@ class ArticlesController extends Controller
 
         $articleStore->update($request, $tagsSynchronizer, $tagsRequest, $this->articleRepository, $article);
 
-        return redirect(route('article.main'))
+        return redirect(route('admin.article.index'))
             ->with('status', 'Статья успешно обновлена!');
     }
 

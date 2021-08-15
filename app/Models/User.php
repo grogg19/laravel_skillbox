@@ -44,4 +44,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class);
     }
+
+    public function role()
+    {
+        return $this->belongsTo(UserRole::class);
+    }
+
+    public function isAdmin()
+    {
+        return !empty($this->role) && $this->role->slug == 'admin';
+    }
+
 }

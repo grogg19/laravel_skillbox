@@ -11,26 +11,35 @@ class ArticlePolicy
     use HandlesAuthorization;
 
     /**
+     * @param User $user
+     * @param Article $article
+     * @return bool
+     */
+    public function show(User $user, Article $article)
+    {
+        return  $user->id === $article->owner_id || $user->isAdmin();
+    }
+
+    /**
      * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
-     * @return mixed
+     * @param User $user
+     * @param Article $article
+     * @return bool
      */
     public function update(User $user, Article $article)
     {
-        return $user->id === $article->owner_id;
+        return $user->id === $article->owner_id || $user->isAdmin();
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Article  $article
-     * @return mixed
+     * @param User $user
+     * @param Article $article
+     * @return bool
      */
     public function delete(User $user, Article $article)
     {
-        return $user->id === $article->owner_id;
+        return $user->id === $article->owner_id || $user->isAdmin();
     }
 }

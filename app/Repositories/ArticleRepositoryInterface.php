@@ -13,6 +13,8 @@ interface ArticleRepositoryInterface
 {
     public function listArticles();
 
+    public function listAllArticles();
+
     public function getArticleBySlug(string $slug);
 
     public function getArticleById(int $id);
