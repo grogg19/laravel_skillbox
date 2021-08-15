@@ -71,6 +71,7 @@ class ArticlesController extends Controller
      * @param StoreArticleRequest $request
      * @param TagsSynchronizer $tagsSynchronizer
      * @param TagRequest $tagsRequest
+     * @param ArticleStore $articleStore
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest, ArticleStore $articleStore)
@@ -99,6 +100,7 @@ class ArticlesController extends Controller
      * @param Article $article
      * @param TagsSynchronizer $tagsSynchronizer
      * @param TagRequest $tagsRequest
+     * @param ArticleStore $articleStore
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */

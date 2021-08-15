@@ -49,5 +49,4 @@ class ArticleStore
         $tagsSynchronizer->sync($tags, $article);
     }
 
-
 }

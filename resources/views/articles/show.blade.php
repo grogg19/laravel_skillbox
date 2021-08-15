@@ -12,7 +12,11 @@
     {{ $article->body }}
     <p class="my-4">
         @can('update', $article)
-        <a class="btn btn-primary" href="{{ route('article.edit', $article) }}">Изменить</a>
+            @admin
+                <a class="btn btn-primary" href="{{ route('admin.article.edit', $article) }}">Изменить</a>
+            @elseadmin
+                <a class="btn btn-primary" href="{{ route('article.edit', $article) }}">Изменить</a>
+            @endadmin
         @endcan
         <a class="btn btn-primary" href="{{ route('article.main') }}">К списку статей</a>
     </p>
