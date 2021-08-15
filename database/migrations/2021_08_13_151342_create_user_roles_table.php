@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use App\Models\UserRole;
 
 class CreateUserRolesTable extends Migration
 {
@@ -21,11 +22,10 @@ class CreateUserRolesTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('user_roles')->insert([
+        UserRole::create([
             'name' => 'Администратор',
             'slug' => 'admin'
         ]);
-
     }
 
     /**
