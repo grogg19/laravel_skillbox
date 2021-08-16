@@ -7,12 +7,13 @@ ENV TZ=Europe/Moscow
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get install software-properties-common -y
-RUN add-apt-repository ppa:ondrej/php
+#RUN add-apt-repository ppa:ondrej/php
 
-RUN apt-get update
-RUN apt-get upgrade -y
+#RUN apt-get update
+#RUN apt-get upgrade -y
 
 RUN apt-get install -y zip unzip
+RUN apt install cron -y
 
 RUN apt install php7.4-common -y
 RUN apt install php7.4-cli -y
@@ -40,7 +41,11 @@ RUN mkdir /var/run/mysqld
 #RUN apt-get install mariadb-server -y
 RUN apt-get install mysql-server -y
 RUN apt-get install git nodejs npm nano tree vim curl wget ftp -y
+
+RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+
 RUN npm install -g bower grunt-cli gulp
+
 
 RUN apt install mc -y
 
