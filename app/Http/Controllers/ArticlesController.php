@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Article\StoreArticleRequest;
 use App\Http\Requests\Tags\TagRequest;
 use App\Models\Article;
+use App\Models\Tag;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Services\ArticleStore;
 use App\Services\TagsSynchronizer;

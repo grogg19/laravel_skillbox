@@ -23,7 +23,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'name' => Str::ucfirst($this->faker->word())
+            'name' => Str::ucfirst($this->faker->unique()->word())
         ];
     }
 }
