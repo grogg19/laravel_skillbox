@@ -57,7 +57,8 @@ class ArticleRepository implements ArticleRepositoryInterface
     {
         $to = !empty($to) ? $to : now();
 
-        return Article::where('is_published', 1)
+        return Article::latest()
+            ->where('is_published', 1)
             ->whereBetween('created_at', [$from, $to])
             ->get();
     }
