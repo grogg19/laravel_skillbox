@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Models\Article;
+use Illuminate\Support\Facades\Date;
 
 /**
  * Interface ArticleInterface
@@ -18,6 +19,8 @@ interface ArticleRepositoryInterface
     public function getArticleBySlug(string $slug);
 
     public function getArticleById(int $id);
+
+    public function getPublishedArticlesByDateInterval(string $from, string $to);
 
     public function createArticle(array $attributes);
 

@@ -49,6 +49,20 @@ class ArticleRepository implements ArticleRepositoryInterface
     }
 
     /**
+     * @param string $from
+     * @param string $to
+     * @return mixed
+     */
+    public function getPublishedArticlesByDateInterval(string $from, string $to = '')
+    {
+        $to = !empty($to) ? $to : now();
+
+        return Article::where('is_published', 1)
+            ->whereBetween('created_at', [$from, $to])
+            ->get();
+    }
+
+    /**
      * @param array $attributes
      * @return Article
      */
