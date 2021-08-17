@@ -22,7 +22,7 @@ class SendPublishedArticlesByInterval extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Отправление уведомлений о новых статьях, опубликованных в определенном интервале';
 
 
     /**
