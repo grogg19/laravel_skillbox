@@ -29,7 +29,8 @@ class ArticleFactory extends Factory
             'slug' => Str::slug($title),
             'excerpt' => $this->faker->text(200),
             'body' => $this->faker->text,
-            'is_published' => $this->faker->boolean()
+            'is_published' => $this->faker->boolean(),
+            'created_at' => $this->faker->dateTimeBetween('-1 month', 'now')
         ];
     }
 }
