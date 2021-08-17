@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Notifications\SendListArticlesForUsersByPeriod;
 use App\Repositories\ArticleRepositoryInterface;
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Illuminate\Console\Command;
 
 class SendPublishedArticlesByInterval extends Command
@@ -16,7 +15,6 @@ class SendPublishedArticlesByInterval extends Command
      *
      * @var string
      */
-    //protected $signature = 'articles:send_by_interval';
     protected $signature = 'articles:send_by_interval {from?} {to?}';
 
     /**
