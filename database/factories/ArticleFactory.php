@@ -25,7 +25,7 @@ class ArticleFactory extends Factory
     {
         return [
             'title' => $title = Str::ucfirst((string) $this->faker->words(rand(3,8), true)),
-            'owner_id' => User::factory()->create(),
+            'owner_id' => User::factory(),
             'slug' => Str::slug($title),
             'excerpt' => $this->faker->text(200),
             'body' => $this->faker->text,
