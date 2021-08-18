@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Article;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -46,6 +47,19 @@ class ArticleRepository implements ArticleRepositoryInterface
     public function getArticleById(int $id)
     {
         return Article::find($id);
+    }
+
+    /**
+     * @param Carbon $from
+     * @param Carbon $to
+     * @return mixed
+     */
+    public function getPublishedArticlesByDateInterval(Carbon $from, Carbon $to)
+    {
+        return Article::latest()
+            ->where('is_published', 1)
+            ->whereBetween('created_at', [$from, $to])
+            ->get();
     }
 
     /**

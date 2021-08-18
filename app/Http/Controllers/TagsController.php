@@ -9,6 +9,7 @@ class TagsController extends Controller
     public function index(Tag $tag)
     {
         $articles = $tag->articles()
+            ->latest()
             ->where('is_published', 1)
             ->with('tags')
             ->get();

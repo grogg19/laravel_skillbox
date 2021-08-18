@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Models\Article;
+use Carbon\Carbon;
 
 /**
  * Interface ArticleInterface
@@ -18,6 +19,8 @@ interface ArticleRepositoryInterface
     public function getArticleBySlug(string $slug);
 
     public function getArticleById(int $id);
+
+    public function getPublishedArticlesByDateInterval(Carbon $from, Carbon $to);
 
     public function createArticle(array $attributes);
 
