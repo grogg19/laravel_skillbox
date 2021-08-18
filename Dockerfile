@@ -24,6 +24,7 @@ RUN apt-get install -y \
     php7.4-curl \
     php7.4-intl \
     php7.4-mysql \
+    php7.4-sqlite \
     php7.4-readline \
     php7.4-xml \
     php7.4-mbstring \
@@ -40,6 +41,7 @@ RUN mkdir /var/run/mysqld
 
 #RUN apt-get install mariadb-server -y
 RUN apt-get install mysql-server -y
+RUN apt-get install sqlite -y
 RUN apt-get install git nodejs npm nano tree vim curl wget ftp -y
 
 RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
