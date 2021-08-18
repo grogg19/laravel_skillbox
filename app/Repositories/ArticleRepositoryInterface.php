@@ -4,7 +4,7 @@
 namespace App\Repositories;
 
 use App\Models\Article;
-use Illuminate\Support\Facades\Date;
+use Carbon\Carbon;
 
 /**
  * Interface ArticleInterface
@@ -20,7 +20,7 @@ interface ArticleRepositoryInterface
 
     public function getArticleById(int $id);
 
-    public function getPublishedArticlesByDateInterval(string $from, string $to);
+    public function getPublishedArticlesByDateInterval(Carbon $from, Carbon $to);
 
     public function createArticle(array $attributes);
 

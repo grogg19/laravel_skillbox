@@ -7,6 +7,7 @@ use App\Notifications\SendListArticlesForUsersByPeriod;
 use App\Repositories\ArticleRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Ramsey\Collection\Collection;
 
 class SendPublishedArticlesByInterval extends Command
 {
@@ -39,23 +40,27 @@ class SendPublishedArticlesByInterval extends Command
      * Execute the console command.
      *
      */
-    public function handle(ArticleRepositoryInterface $articleRepository)
+    public function handle(ArticleRepositoryInterface $articleRepository, Carbon $from, Carbon $to)
     {
-        $from = !empty($this->argument('from'))
-            ? Carbon::createFromFormat("d.m.Y", $this->argument('from'), 'Europe/Moscow')->setTime(0, 0, 0)->toDateString()
-            : Carbon::now()->setTimezone("Europe/Moscow")->subDay(7)->setTime(0,0,0)->toDateString();
+        $from->setTimezone("Europe/Moscow");
+        $to->setTimezone("Europe/Moscow");
 
-        $to = !empty($this->argument('to'))
-            ? Carbon::createFromFormat('d.m.Y', $this->argument('to'), 'Europe/Moscow')->setTime(23,59,59)->toDateString()
-            : Carbon::now()->setTimezone('Europe/Moscow')->toDateString();
+        !empty($this->argument('from'))
+            ? $from->setDateTimeFrom($this->argument('from'))->startOfDay()
+            : $from->subWeek()->startOfDay();
+
+        $to->setDateTimeFrom($this->argument('to'))->endOfDay();
 
         $articles = $articleRepository->getPublishedArticlesByDateInterval($from, $to);
 
-        if(!empty($articles)) {
-            $subject = 'Список новых опубликованных статей за период с ' . Carbon::parse($from)->format("d.m.Y") . ' до ' . Carbon::parse($to)->format('d.m.Y');
+        if(!$articles->isEmpty()) {
+            $subject = 'Список новых опубликованных статей за период с ' . $from->format('d.m.Y') . ' до ' . $to->format('d.m.Y');
             User::all()->map->notify(new SendListArticlesForUsersByPeriod($subject, $articles));
+
+            $this->info("Уведомления успешно отправлены.");
+        } else {
+            $this->info("Новых статей в заданный период не публиковалось.");
         }
 
-        $this->info("Уведомления успешно отправлены.");
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Article;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -49,14 +50,12 @@ class ArticleRepository implements ArticleRepositoryInterface
     }
 
     /**
-     * @param string $from
-     * @param string $to
+     * @param Carbon $from
+     * @param Carbon $to
      * @return mixed
      */
-    public function getPublishedArticlesByDateInterval(string $from, string $to = '')
+    public function getPublishedArticlesByDateInterval(Carbon $from, Carbon $to)
     {
-        $to = !empty($to) ? $to : now();
-
         return Article::latest()
             ->where('is_published', 1)
             ->whereBetween('created_at', [$from, $to])
