@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class PushAll
 {
@@ -25,11 +25,10 @@ class PushAll
     /**
      * @param $title
      * @param $text
-     * @param $articleLink
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param $link
+     * @return \Illuminate\Http\Client\Response
      */
-    public function send($title, $text, $articleLink)
+    public function send($title, $text, $link)
     {
         $data = [
             'type' => 'self',
@@ -37,10 +36,9 @@ class PushAll
             'key' => $this->apiKey,
             'title' => $title,
             'text' => $text,
-            'url' => $articleLink
+            'url' => $link
         ];
 
-        $client = new Client(['base_uri' => $this->url]);
-        return $client->post('', ['form_params' => $data]);
+        return Http::asForm()->post($this->url, $data);
     }
 }
