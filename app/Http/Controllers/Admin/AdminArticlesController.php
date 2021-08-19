@@ -76,6 +76,11 @@ class AdminArticlesController extends Controller
         $article = is_numeric($articleKey) ? $this->articleRepository->getArticleById($articleKey)
             : $this->articleRepository->getArticleBySlug($articleKey);
 
+        if($article === null) {
+            return redirect(route('article.main'))
+                ->with('status', 'Такой статьи не существует!');
+        }
+
         return view('articles.admin.show', compact('article'));
     }
 
