@@ -35,8 +35,8 @@ class PushAll
             'type' => 'self',
             'id' => $this->id,
             'key' => $this->apiKey,
-            'text' => $title,
-            'title' => $text,
+            'title' => $title,
+            'text' => $text,
             'url' => $articleLink
         ];
 
