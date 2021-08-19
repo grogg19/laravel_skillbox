@@ -28,7 +28,7 @@ class ArticleStore
 
         $tagsSynchronizer->sync($tags, $article);
 
-        //return $article;
+        return $article;
     }
 
     /**

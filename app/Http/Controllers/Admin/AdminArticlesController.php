@@ -58,7 +58,9 @@ class AdminArticlesController extends Controller
 
     public function store(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest, ArticleStore $articleStore)
     {
-        $articleStore->create($request, $tagsSynchronizer, $tagsRequest, $this->articleRepository);
+        $article = $articleStore->create($request, $tagsSynchronizer, $tagsRequest, $this->articleRepository);
+
+        push_all($article->title, $article->excerpt, route('article.show', $article));
 
         return redirect(route('admin.article.index'))
             ->with('status', 'Новая статья успешно записана!');
