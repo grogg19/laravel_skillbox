@@ -16,6 +16,8 @@ class ContentSeeder extends Seeder
      */
     public function run()
     {
+        Article::flushEventListeners();
+
         $tags = Tag::factory()->count(10)->create();
 
         User::factory()->count(3)->create()->each(
