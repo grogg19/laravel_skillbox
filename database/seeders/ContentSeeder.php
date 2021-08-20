@@ -3,8 +3,6 @@
 namespace Database\Seeders;
 
 use App\Events\ArticleCreated;
-use App\Listeners\SendArticleCreatedNotification;
-use App\Listeners\SendArticleCreatedPushNotification;
 use App\Models\Article;
 use App\Models\Tag;
 use App\Models\User;
