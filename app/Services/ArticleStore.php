@@ -27,6 +27,8 @@ class ArticleStore
         $tags = $tagsRequest->getTags($request);
 
         $tagsSynchronizer->sync($tags, $article);
+
+        return $article;
     }
 
     /**

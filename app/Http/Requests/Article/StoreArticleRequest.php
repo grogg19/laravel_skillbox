@@ -25,9 +25,9 @@ class StoreArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:5|max:100',
+            'title' => 'required|min:5|max:80',
             'slug' => !$this->article ? 'required|unique:articles' : Rule::unique('articles')->ignore($this->article, 'id'),
-            'excerpt' => 'required|max:255',
+            'excerpt' => 'required|max:500',
             'body' => 'required',
         ];
     }
