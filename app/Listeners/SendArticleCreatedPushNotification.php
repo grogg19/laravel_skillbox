@@ -32,4 +32,6 @@ class SendArticleCreatedPushNotification
     {
         $this->pushAll->send($event->article->title, $event->article->excerpt, route('article.show', $event->article));
     }
+
+
 }

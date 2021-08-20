@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Events\ArticleCreated;
+use App\Listeners\SendArticleCreatedNotification;
+use App\Listeners\SendArticleCreatedPushNotification;
 use App\Models\Article;
 use App\Models\Tag;
 use App\Models\User;
@@ -16,7 +19,7 @@ class ContentSeeder extends Seeder
      */
     public function run()
     {
-        Article::flushEventListeners();
+        Article::getEventDispatcher()->forget(ArticleCreated::class);
 
         $tags = Tag::factory()->count(10)->create();
 
@@ -24,7 +27,7 @@ class ContentSeeder extends Seeder
             function (User $user) use ($tags){
                 Article::factory()->count(10)->create([
                     'owner_id' => $user
-                ])->each(function (Article $article) use ($tags){
+                ])->each(function (Article $article) use ($tags) {
                     $article->tags()->attach(
                         $tags
                             ->shuffle()
@@ -33,6 +36,5 @@ class ContentSeeder extends Seeder
                 });
             }
         );
-
     }
 }
