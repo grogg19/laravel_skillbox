@@ -42,7 +42,7 @@ class User extends Authenticatable
 
     public function articles()
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Article::class, 'owner_id');
     }
 
     public function role()

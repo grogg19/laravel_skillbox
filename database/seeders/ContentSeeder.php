@@ -21,18 +21,17 @@ class ContentSeeder extends Seeder
 
         $tags = Tag::factory()->count(10)->create();
 
-        User::factory()->count(3)->create()->each(
-            function (User $user) use ($tags){
-                Article::factory()->count(10)->create([
-                    'owner_id' => $user
-                ])->each(function (Article $article) use ($tags) {
+        User::factory()
+            ->has(Article::factory()->count(10)
+                ->afterCreating(function (Article $article) use ($tags) {
                     $article->tags()->attach(
                         $tags
                             ->shuffle()
                             ->take(rand(1,4))
                             ->pluck('id'));
-                });
-            }
-        );
+                }), 'articles')
+            ->count(3)
+            ->create()
+        ;
     }
 }
