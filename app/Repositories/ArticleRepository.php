@@ -18,7 +18,9 @@ class ArticleRepository implements ArticleRepositoryInterface
      */
     public function listAllArticles()
     {
-        return Article::latest()->get();
+        return Article::latest()
+            ->with('tags')
+            ->get();
     }
 
     /**
@@ -27,6 +29,7 @@ class ArticleRepository implements ArticleRepositoryInterface
     public function listArticles(): Collection
     {
         return Article::latest()
+            ->with('tags')
             ->where('is_published', 1)
             ->get();
     }
