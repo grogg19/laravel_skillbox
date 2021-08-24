@@ -1,3 +1,4 @@
+@include('errors.list')
 <form method="post" action="{{ route('article.comment.store', $article) }}" class="mt-4">
     @csrf
     <div class="mb-3">

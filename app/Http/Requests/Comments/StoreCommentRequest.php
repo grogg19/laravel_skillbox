@@ -42,7 +42,7 @@ class StoreCommentRequest extends FormRequest
     public function attributes()
     {
         return [
-            'body' => 'Текст комментария'
+            'body' => 'Оставить комментарий'
         ];
     }
 }
