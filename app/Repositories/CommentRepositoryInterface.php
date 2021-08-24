@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Article;
+
 interface CommentRepositoryInterface
 {
-    public function listComments();
+    public function createComment(Article $article, $attributes);
 }

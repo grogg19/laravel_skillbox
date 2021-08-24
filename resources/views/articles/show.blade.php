@@ -11,7 +11,11 @@
     <p class="blog-post-meta">{{ $article->created_at->toFormattedDateString() }}</p>
     {{ $article->body }}
 
-    @include('comments.list', ['comments' => $article->comments])
+    @auth()
+        @include('comments.form')
+    @endauth
+
+    @include('comments.list')
 
     <p class="my-4">
         @can('update', $article)

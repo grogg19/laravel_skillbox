@@ -32,6 +32,9 @@ class StoreArticleRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function messages()
     {
         return [
@@ -47,6 +50,9 @@ class StoreArticleRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function attributes()
     {
         return [

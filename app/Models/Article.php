@@ -41,7 +41,12 @@ class Article extends Model implements HasTags
 
     public function comments()
     {
-        return $this->hasMany(Comment::class)->with('user');
+        return $this->hasMany(Comment::class);
+    }
+
+    public function addComment($attributes)
+    {
+        $this->comments()->create($attributes);
     }
 
 }
