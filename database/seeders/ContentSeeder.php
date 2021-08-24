@@ -22,7 +22,7 @@ class ContentSeeder extends Seeder
 
         $tags = Tag::factory()->count(10)->create();
 
-        User::factory()
+        $users = User::factory()
             ->has(Article::factory()->count(10)
                 ->afterCreating(function (Article $article) use ($tags) {
                     $article->tags()->attach(
@@ -31,10 +31,10 @@ class ContentSeeder extends Seeder
                             ->take(rand(1,4))
                             ->pluck('id'));
                 })
-                ->afterCreating(function (Article $article, User $user) {
+                ->afterCreating(function (Article $article) {
+
                     Comment::factory()->count(rand(2,5))->create([
-                        'article_id' => $article,
-                        'owner_id' => $user
+                        'article_id' => $article
                     ]);
                 })
                 , 'articles')

@@ -40,7 +40,9 @@ class ArticleRepository implements ArticleRepositoryInterface
      */
     public function getArticleBySlug(string $slug)
     {
-        return Article::where('slug', $slug)->first();
+        return Article::where('slug', $slug)
+            ->with('comments')
+            ->first();
     }
 
     /**
@@ -49,7 +51,8 @@ class ArticleRepository implements ArticleRepositoryInterface
      */
     public function getArticleById(int $id)
     {
-        return Article::find($id);
+        return Article::with('comments')
+            ->find($id);
     }
 
     /**

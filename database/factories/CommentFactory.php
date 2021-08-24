@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 class CommentFactory extends Factory
 {
@@ -23,10 +24,14 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
+        $article = Article::orderByRaw('RAND()')->first();
+        $user = User::orderByRaw('RAND()')->first();
+
+
         return [
             'body' => $this->faker->text(),
-            'owner_id' => User::factory(),
-            'article_id' => Article::factory()
+            'owner_id' => $user,
+            'article_id' => $article,
         ];
     }
 }
