@@ -22,6 +22,8 @@ class CreateArticlesTable extends Migration
             $table->text('body');
             $table->boolean('is_published')->default(0);
             $table->timestamps();
+
+            $table->foreign('owner_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 
