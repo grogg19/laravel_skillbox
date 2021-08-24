@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Events\ArticleCreated;
 use App\Models\Article;
+use App\Models\Comment;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -29,7 +30,14 @@ class ContentSeeder extends Seeder
                             ->shuffle()
                             ->take(rand(1,4))
                             ->pluck('id'));
-                }), 'articles')
+                })
+                ->afterCreating(function (Article $article, User $user) {
+                    Comment::factory()->count(rand(2,5))->create([
+                        'article_id' => $article,
+                        'owner_id' => $user
+                    ]);
+                })
+                , 'articles')
             ->count(3)
             ->create()
         ;
