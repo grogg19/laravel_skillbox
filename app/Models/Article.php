@@ -39,4 +39,9 @@ class Article extends Model implements HasTags
         return $this->belongsTo(User::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }
