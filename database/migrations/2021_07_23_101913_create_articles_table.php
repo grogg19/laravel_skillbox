@@ -20,7 +20,7 @@ class CreateArticlesTable extends Migration
             $table->string('slug')->unique();
             $table->text('excerpt');
             $table->text('body');
-            $table->boolean('is_published')->default(0);
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('users')->cascadeOnDelete();

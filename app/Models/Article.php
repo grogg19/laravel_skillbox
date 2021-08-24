@@ -25,6 +25,10 @@ class Article extends Model implements HasTags
         'deleted' => ArticleDeleted::class
     ];
 
+    protected $casts = [
+        'is_published' => 'boolean'
+    ];
+
     public function getRouteKeyName()
     {
         return 'slug';
