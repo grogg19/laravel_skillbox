@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="mb-4 font-italic border-bottom"></div>
-    <h1>Администрирование | {{ $newsItem->title }}</h1>
+    <h2>Администрирование | {{ $newsItem->title }}</h2>
 
     <p class="blog-post-meta">{{ $newsItem->created_at->toFormattedDateString() }}</p>
     {{ $newsItem->body }}

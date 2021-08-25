@@ -3,16 +3,16 @@
 @section('title', 'Административный раздел | Редактирование новости ')
 
 @section('content')
-    <h3 class="pb-3 mb-4 font-italic border-bottom">
+    <h2 class="pb-3 mb-4 font-italic border-bottom">
         Административный раздел | редактирование новости
-    </h3>
+    </h2>
     @include('errors.list')
-    <form method="post" action="{{ route('admin.news.update', $news) }}">
+    <form method="post" action="{{ route('admin.news.update', $newsItem) }}">
         @csrf
         @method('patch')
         @include('news.partials.form')
     </form>
-    <form method="post" action="{{ route('news.destroy', $news) }}">
+    <form method="post" action="{{ route('admin.news.destroy', $newsItem) }}">
         @csrf
         @method('delete')
         <div class="form-group mb-4">
