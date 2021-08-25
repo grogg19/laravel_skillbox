@@ -14,9 +14,9 @@ class ArticleRepository implements ArticleRepositoryInterface
 {
 
     /**
-     * @return mixed
+     * @return Collection
      */
-    public function listAllArticles()
+    public function listAllArticles(): Collection
     {
         return Article::latest()
             ->with('tags')
@@ -24,13 +24,13 @@ class ArticleRepository implements ArticleRepositoryInterface
     }
 
     /**
-     * @return mixed
+     * @return Collection
      */
     public function listArticles(): Collection
     {
         return Article::latest()
             ->with('tags')
-            ->where('is_published', 1)
+            ->where('is_published', true)
             ->get();
     }
 
