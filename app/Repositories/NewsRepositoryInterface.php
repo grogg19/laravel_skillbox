@@ -16,7 +16,7 @@ interface NewsRepositoryInterface
 
     public function createNews(array $attributes);
 
-    public function updateUpdate(News $news, array $attributes);
+    public function updateNews(News $news, array $attributes);
 
     public function deleteNews(News $news);
 }
