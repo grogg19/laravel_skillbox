@@ -23,10 +23,10 @@ class ContentSeeder extends Seeder
 
         $tags = Tag::factory()->count(10)->create();
 
-        News::factory()->count(30)->create();
+        News::factory()->count(60)->create();
 
         $users = User::factory()
-            ->has(Article::factory()->count(10)
+            ->has(Article::factory()->count(20)
                 ->afterCreating(function (Article $article) use ($tags) {
                     $article->tags()->attach(
                         $tags
