@@ -7,4 +7,5 @@
     @foreach($news as $newsItem)
         @include('news.admin.item')
     @endforeach
+    {{ $news->links() }}
 @endsection

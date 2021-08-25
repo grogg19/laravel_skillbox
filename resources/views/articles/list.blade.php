@@ -5,4 +5,5 @@
     @foreach($articles as $article)
         @include('articles.item')
     @endforeach
+    {{ $articles->links() }}
 @endsection

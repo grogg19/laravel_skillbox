@@ -4,27 +4,28 @@ namespace App\Repositories;
 
 use App\Models\News;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class NewsRepository implements NewsRepositoryInterface
 {
 
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function listPublishedNews(): Collection
+    public function listPublishedNews(): LengthAwarePaginator
     {
         return News::latest()
             ->where('is_published', true)
-            ->get();
+            ->paginate(10);
     }
 
     /**
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function listAllNews(): Collection
+    public function listAllNews(): LengthAwarePaginator
     {
         return News::latest()
-            ->get();
+            ->paginate(20);
     }
 
     /**
