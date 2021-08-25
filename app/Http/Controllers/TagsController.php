@@ -12,7 +12,7 @@ class TagsController extends Controller
             ->latest()
             ->where('is_published', 1)
             ->with('tags')
-            ->get();
+            ->paginate(10);
 
         return view('index', compact('articles'));
     }
