@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Events\ArticleCreated;
 use App\Models\Article;
 use App\Models\Comment;
+use App\Models\News;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -21,6 +22,8 @@ class ContentSeeder extends Seeder
         Article::getEventDispatcher()->forget(ArticleCreated::class);
 
         $tags = Tag::factory()->count(10)->create();
+
+        News::factory()->count(30)->create();
 
         $users = User::factory()
             ->has(Article::factory()->count(10)
