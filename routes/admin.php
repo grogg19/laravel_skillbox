@@ -10,6 +10,10 @@ Route::middleware('admin')->group( function () {
         'as' => 'admin'
     ]);
 
+    Route::resource('admin/news', 'Admin\AdminNewsController', [
+        'as' => 'admin'
+    ]);
+
 });
 
 

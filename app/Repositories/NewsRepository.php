@@ -13,7 +13,7 @@ class NewsRepository implements NewsRepositoryInterface
      */
     public function listPublishedNews(): Collection
     {
-        return News::latests()
+        return News::latest()
             ->where('is_published', true)
             ->get();
     }
@@ -23,7 +23,7 @@ class NewsRepository implements NewsRepositoryInterface
      */
     public function listAllNews(): Collection
     {
-        return News::latests()
+        return News::latest()
             ->get();
     }
 
@@ -59,7 +59,7 @@ class NewsRepository implements NewsRepositoryInterface
      * @param News $news
      * @param array $attributes
      */
-    public function updateUpdate(News $news, array $attributes)
+    public function updateNews(News $news, array $attributes)
     {
         $news->update($attributes);
     }
