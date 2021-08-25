@@ -13,7 +13,7 @@ use Illuminate\Support\Arr;
  * Class Article
  * @package App\Models
  */
-class Article extends Model implements HasTags
+class Article extends Model implements HasTags, HasComments
 {
     use HasFactory;
 
