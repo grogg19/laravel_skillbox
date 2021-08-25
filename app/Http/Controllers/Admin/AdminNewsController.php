@@ -66,7 +66,7 @@ class AdminNewsController extends Controller
         $newsItem = $this->newsRepository->getNewsBySlug($slug);
 
         if ($newsItem === null) {
-            return redirect(route('news.main'))
+            return redirect(route('admin.news.main'))
                 ->with('status', 'Такой новости не существует!');
         }
 
@@ -122,7 +122,7 @@ class AdminNewsController extends Controller
 
         $this->newsRepository->deleteNews($news);
 
-        return redirect(route('news.main'))
+        return redirect(route('admin.news.index'))
             ->with('status', 'Новость успешно удалена!');
     }
 }
