@@ -23,7 +23,7 @@ class NewsController extends Controller
     {
         $news = $this->newsRepository->listPublishedNews();
 
-        return view('index', compact('news'));
+        return view('news.list', compact('news'));
     }
 
 
