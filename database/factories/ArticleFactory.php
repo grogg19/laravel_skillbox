@@ -28,7 +28,7 @@ class ArticleFactory extends Factory
             'owner_id' => User::factory(),
             'slug' => Str::slug($title),
             'excerpt' => $this->faker->text(200),
-            'body' => $this->faker->text,
+            'body' => $this->faker->text(1000),
             'is_published' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTimeBetween('-1 month', 'now')
         ];

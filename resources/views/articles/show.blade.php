@@ -10,6 +10,13 @@
 
     <p class="blog-post-meta">{{ $article->created_at->toFormattedDateString() }}</p>
     {{ $article->body }}
+
+    @auth()
+        @include('comments.form')
+    @endauth
+
+    @include('comments.list')
+
     <p class="my-4">
         @can('update', $article)
             @admin
