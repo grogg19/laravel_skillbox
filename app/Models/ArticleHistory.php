@@ -11,6 +11,11 @@ class ArticleHistory extends Model
 
     protected $fillable = ['article_id', 'user_id', 'before', 'after'];
 
+    protected $casts = [
+        'before' => 'array',
+        'after' => 'array'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

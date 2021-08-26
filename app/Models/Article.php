@@ -29,6 +29,7 @@ class Article extends Model implements HasTags, HasComments
         'is_published' => 'boolean'
     ];
 
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -66,9 +67,10 @@ class Article extends Model implements HasTags, HasComments
         static::updating(function (Article $article) {
 
             $after = $article->getDirty();
+
             $article->history()->attach(auth()->id(), [
-                'before' => json_encode(Arr::only($article->fresh()->toArray(), array_keys($after))),
-                'after' => json_encode($after)
+                'before' => Arr::only($article->fresh()->toArray(), array_keys($after)),
+                'after' => $after
             ]);
         });
     }
