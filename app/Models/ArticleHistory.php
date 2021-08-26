@@ -3,13 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class ArticleHistory extends Model
+class ArticleHistory extends Pivot
 {
     use HasFactory;
 
     protected $fillable = ['article_id', 'user_id', 'before', 'after'];
+
+    protected $casts = [
+        'before' => 'array',
+        'after' => 'array'
+    ];
 
     public function user()
     {

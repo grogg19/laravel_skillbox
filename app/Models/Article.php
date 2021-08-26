@@ -13,7 +13,7 @@ use Illuminate\Support\Arr;
  * Class Article
  * @package App\Models
  */
-class Article extends Model implements HasTags
+class Article extends Model implements HasTags, HasComments
 {
     use HasFactory;
 
@@ -28,6 +28,7 @@ class Article extends Model implements HasTags
     protected $casts = [
         'is_published' => 'boolean'
     ];
+
 
     public function getRouteKeyName()
     {
@@ -51,7 +52,10 @@ class Article extends Model implements HasTags
 
     public function history()
     {
-        return $this->belongsToMany(User::class, 'article_histories')->withPivot(['before', 'after'])->withTimestamps();
+        return $this->belongsToMany(ArticleHistory::class, 'article_histories', 'article_id', 'user_id')
+            ->using(ArticleHistory::class)
+            ->withPivot(['before', 'after'])
+            ->withTimestamps();
     }
 
     public function addComment($attributes)
@@ -66,9 +70,10 @@ class Article extends Model implements HasTags
         static::updating(function (Article $article) {
 
             $after = $article->getDirty();
+
             $article->history()->attach(auth()->id(), [
-                'before' => json_encode(Arr::only($article->fresh()->toArray(), array_keys($after))),
-                'after' => json_encode($after)
+                'before' => Arr::only($article->fresh()->toArray(), array_keys($after)),
+                'after' => $after
             ]);
         });
     }
