@@ -7,4 +7,5 @@
     @foreach($articles as $article)
         @include('articles.admin.item')
     @endforeach
+    {{ $articles->links() }}
 @endsection

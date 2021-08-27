@@ -1,5 +1,12 @@
 <div class="blog-post">
-    <h2 class="blog-post-title">{{ $article->title }}</h2>
+    <h2 class="blog-post-title">
+        @if($article->is_published)
+            <i class="far fa-eye mr-2" title="Опубликовано"></i>
+        @else
+            <i class="far fa-eye-slash mr-2" title="Неопубликовано"></i>
+        @endif
+        {{ $article->title }}
+    </h2>
 
     @include('tags.list', ['tags' => $article->tags])
 

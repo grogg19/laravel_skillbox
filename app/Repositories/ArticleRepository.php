@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Article;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * Class ArticleRepository
@@ -14,24 +15,24 @@ class ArticleRepository implements ArticleRepositoryInterface
 {
 
     /**
-     * @return mixed
+     * @return LengthAwarePaginator
      */
-    public function listAllArticles()
+    public function listAllArticles(): LengthAwarePaginator
     {
         return Article::latest()
             ->with('tags')
-            ->get();
+            ->paginate(20);
     }
 
     /**
-     * @return mixed
+     * @return LengthAwarePaginator
      */
-    public function listArticles(): Collection
+    public function listArticles(): LengthAwarePaginator
     {
         return Article::latest()
             ->with('tags')
-            ->where('is_published', 1)
-            ->get();
+            ->where('is_published', true)
+            ->paginate(10);
     }
 
     /**

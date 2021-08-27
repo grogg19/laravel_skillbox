@@ -6,13 +6,18 @@ use App\Models\Tag;
 
 class TagsController extends Controller
 {
-    public function index(Tag $tag)
+    /**
+     * @param Tag $tag
+     * @param int $perPage
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function index(Tag $tag, int $perPage = 10)
     {
         $articles = $tag->articles()
             ->latest()
             ->where('is_published', 1)
             ->with('tags')
-            ->get();
+            ->paginate($perPage);
 
         return view('index', compact('articles'));
     }

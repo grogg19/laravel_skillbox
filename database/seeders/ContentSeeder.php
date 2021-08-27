@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Events\ArticleCreated;
 use App\Models\Article;
 use App\Models\Comment;
+use App\Models\News;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -22,8 +23,10 @@ class ContentSeeder extends Seeder
 
         $tags = Tag::factory()->count(10)->create();
 
+        News::factory()->count(60)->create();
+
         $users = User::factory()
-            ->has(Article::factory()->count(10)
+            ->has(Article::factory()->count(20)
                 ->afterCreating(function (Article $article) use ($tags) {
                     $article->tags()->attach(
                         $tags
