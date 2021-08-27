@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\News\StoreNewsRequest;
-use App\Models\News;
 use App\Repositories\NewsRepositoryInterface;
-use App\Services\NewsStore;
-use Illuminate\Http\Request;
 
 class AdminNewsController extends Controller
 {
@@ -45,12 +42,16 @@ class AdminNewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreNewsRequest $request
-     * @param NewsStore $newsStore
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(StoreNewsRequest $request, NewsStore $newsStore)
+    public function store(StoreNewsRequest $request)
     {
-        $newsStore->create($request);
+        $attributes = $request->validated();
+
+        $attributes['is_published'] = $request->boolean('is_published');
+        $attributes['author_id'] = auth()->id();
+
+        $this->newsRepository->createNews($attributes);
 
         return redirect(route('admin.news.index'))
             ->with('status', 'Новая статья успешно записана!');
@@ -63,14 +64,14 @@ class AdminNewsController extends Controller
      */
     public function show($slug)
     {
-        $newsItem = $this->newsRepository->getNewsBySlug($slug);
+        $news = $this->newsRepository->getNewsBySlug($slug);
 
-        if ($newsItem === null) {
+        if ($news === null) {
             return redirect(route('admin.news.main'))
                 ->with('status', 'Такой новости не существует!');
         }
 
-        return view('news.admin.show', compact('newsItem'));
+        return view('news.admin.show', compact('news'));
     }
 
     /**
@@ -93,16 +94,20 @@ class AdminNewsController extends Controller
      * Update the specified resource in storage.
      *
      * @param StoreNewsRequest $request
-     * @param News $news
-     * @param NewsStore $newsStore
+     * @param string $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(StoreNewsRequest $request, News $news, NewsStore $newsStore)
+    public function update(StoreNewsRequest $request, string $slug)
     {
+        $news = $this->newsRepository->getNewsBySlug($slug);
+
         $this->authorize('update', $news);
 
-        $newsStore->update($request, $news);
+        $attributes = $request->validated();
+        $attributes['is_published'] = $request->boolean('is_published');
+
+        $this->newsRepository->updateNews($news, $attributes);
 
         return redirect(route('admin.news.index'))
             ->with('status', 'Новость успешно обновлена!');
@@ -112,12 +117,14 @@ class AdminNewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param News $news
+     * @param string $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(News $news)
+    public function destroy(string $slug)
     {
+        $news = $this->newsRepository->getNewsBySlug($slug);
+
         $this->authorize('delete', $news);
 
         $this->newsRepository->deleteNews($news);
