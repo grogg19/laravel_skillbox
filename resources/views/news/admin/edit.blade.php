@@ -7,12 +7,12 @@
         Административный раздел | редактирование новости
     </h2>
     @include('errors.list')
-    <form method="post" action="{{ route('admin.news.update', $newsItem) }}">
+    <form method="post" action="{{ route('admin.news.update', $news) }}">
         @csrf
         @method('patch')
         @include('news.partials.form')
     </form>
-    <form method="post" action="{{ route('admin.news.destroy', $newsItem) }}">
+    <form method="post" action="{{ route('admin.news.destroy', $news) }}">
         @csrf
         @method('delete')
         <div class="form-group mb-4">

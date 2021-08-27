@@ -83,11 +83,11 @@ class AdminNewsController extends Controller
      */
     public function edit($slug)
     {
-        $newsItem = $this->newsRepository->getNewsBySlug($slug);
+        $news = $this->newsRepository->getNewsBySlug($slug);
 
-        $this->authorize('update', $newsItem);
+        $this->authorize('update', $news);
 
-        return view('news.admin.edit', compact('newsItem'));
+        return view('news.admin.edit', compact('news'));
     }
 
     /**

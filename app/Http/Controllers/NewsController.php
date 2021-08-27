@@ -35,17 +35,17 @@ class NewsController extends Controller
      */
     public function show($slug)
     {
-        $newsItem = $this->newsRepository->getNewsBySlug($slug);
+        $news = $this->newsRepository->getNewsBySlug($slug);
 
-        if ($newsItem === null) {
+        if ($news === null) {
             return redirect(route('news.main'))
                 ->with('status', 'Такой новости не существует!');
         }
 
-        if (!$newsItem->is_published) {
-            $this->authorize('show', $newsItem);
+        if (!$news->is_published) {
+            $this->authorize('show', $news);
         }
 
-        return view('news.show', compact('newsItem'));
+        return view('news.show', compact('news'));
     }
 }
