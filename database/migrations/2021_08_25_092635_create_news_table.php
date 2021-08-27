@@ -15,11 +15,11 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->unsignedInteger('id', true);
-            $table->string('title')->nullable(false);
-            $table->string('slug')->nullable(false)->unique();
-            $table->unsignedInteger('author_id')->nullable(false);
-            $table->text('excerpt')->nullable(false);
-            $table->text('body')->nullable(false);
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->unsignedInteger('author_id');
+            $table->text('excerpt');
+            $table->text('body');
             $table->boolean('is_published')->default(false);
             $table->timestamps();
             $table->softDeletes();
