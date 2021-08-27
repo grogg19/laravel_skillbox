@@ -12,34 +12,44 @@ use App\Repositories\NewsRepositoryInterface;
 
 class NewsStore
 {
+
+    /**
+     * @var NewsRepositoryInterface
+     */
+    private $newsRepository;
+
+    /**
+     * @param NewsRepositoryInterface $newsRepository
+     */
+    public function __construct(NewsRepositoryInterface $newsRepository)
+    {
+        $this->newsRepository = $newsRepository;
+    }
+
     /**
      * @param StoreNewsRequest $request
-     * @param NewsRepositoryInterface $newsRepository
      * @return mixed
      */
-    public function create(StoreNewsRequest $request, NewsRepositoryInterface $newsRepository)
+    public function create(StoreNewsRequest $request)
     {
         $attributes = $request->validated();
 
         $attributes['is_published'] = $request->boolean('is_published');
         $attributes['author_id'] = auth()->id();
 
-        $newsItem = $newsRepository->createNews($attributes);
-
-        return $newsItem;
+        return $this->newsRepository->createNews($attributes);
     }
 
     /**
      * @param StoreNewsRequest $request
-     * @param NewsRepositoryInterface $newsRepository
      * @param News $newsItem
      */
-    public function update(StoreNewsRequest $request, NewsRepositoryInterface $newsRepository, News $newsItem)
+    public function update(StoreNewsRequest $request, News $newsItem)
     {
         $attributes = $request->validated();
         $attributes['is_published'] = $request->boolean('is_published');
 
-        $newsRepository->updateNews($newsItem, $attributes);
+        $this->newsRepository->updateNews($newsItem, $attributes);
     }
 
 }

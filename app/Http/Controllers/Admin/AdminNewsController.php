@@ -50,7 +50,7 @@ class AdminNewsController extends Controller
      */
     public function store(StoreNewsRequest $request, NewsStore $newsStore)
     {
-        $newsStore->create($request, $this->newsRepository);
+        $newsStore->create($request);
 
         return redirect(route('admin.news.index'))
             ->with('status', 'Новая статья успешно записана!');
@@ -102,7 +102,7 @@ class AdminNewsController extends Controller
     {
         $this->authorize('update', $news);
 
-        $newsStore->update($request, $this->newsRepository, $news);
+        $newsStore->update($request, $news);
 
         return redirect(route('admin.news.index'))
             ->with('status', 'Новость успешно обновлена!');
