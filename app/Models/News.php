@@ -25,4 +25,12 @@ class News extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
 }

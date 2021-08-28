@@ -35,9 +35,12 @@ class Article extends Model implements HasTags, HasComments
         return 'slug';
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function user()
