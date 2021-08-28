@@ -15,24 +15,26 @@ class ArticleRepository implements ArticleRepositoryInterface
 {
 
     /**
+     * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function listAllArticles(): LengthAwarePaginator
+    public function listAllArticles(int $perPage = 20): LengthAwarePaginator
     {
         return Article::latest()
             ->with('tags')
-            ->paginate(20);
+            ->paginate($perPage);
     }
 
     /**
+     * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function listArticles(): LengthAwarePaginator
+    public function listArticles(int $perPage = 10): LengthAwarePaginator
     {
         return Article::latest()
             ->with('tags')
             ->where('is_published', true)
-            ->paginate(10);
+            ->paginate($perPage);
     }
 
     /**
