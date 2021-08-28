@@ -42,14 +42,13 @@ class AdminArticlesController extends Controller
     }
 
     /**
-     * @param $articleKey
+     * @param $slug
      * @return View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit($articleKey): View
+    public function edit($slug): View
     {
-        $article = is_numeric($articleKey) ? $this->articleRepository->getArticleById($articleKey)
-            : $this->articleRepository->getArticleBySlug($articleKey);
+        $article = $this->articleRepository->getArticleBySlug($slug);
 
         $this->authorize('update', $article);
 
@@ -66,13 +65,13 @@ class AdminArticlesController extends Controller
 
     /**
      * Display the specified article.
-     * @param $articleKey
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     *
+     * @param $slug
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function show($articleKey)
+    public function show($slug)
     {
-        $article = is_numeric($articleKey) ? $this->articleRepository->getArticleById($articleKey)
-            : $this->articleRepository->getArticleBySlug($articleKey);
+        $article = $this->articleRepository->getArticleBySlug($slug);
 
         if ($article === null) {
             return redirect(route('article.main'))
@@ -102,12 +101,14 @@ class AdminArticlesController extends Controller
     }
 
     /**
-     * @param Article $article
+     * @param $slug
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Article $article)
+    public function destroy($slug)
     {
+        $article = $this->articleRepository->getArticleBySlug($slug);
+
         $this->authorize('delete', $article);
 
         $this->articleRepository->deleteArticle($article);
