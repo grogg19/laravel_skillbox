@@ -44,6 +44,8 @@ class AdminNewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreNewsRequest $request
+     * @param TagRequest $tagRequest
+     * @param TagsSynchronizer $tagsSynchronizer
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(StoreNewsRequest $request, TagRequest $tagRequest, TagsSynchronizer $tagsSynchronizer)

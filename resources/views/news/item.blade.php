@@ -5,5 +5,5 @@
 
     <p class="blog-post-meta">{{ $newsItem->created_at->toFormattedDateString() }}</p>
     <p>{{ $newsItem->excerpt }}</p>
-    <a href="{{ route('news.show', ['news' => $newsItem->slug]) }}">Прочитать</a>
+    <a href="{{ route('news.show', $newsItem) }}">Прочитать</a>
 </div>

@@ -4,5 +4,5 @@
     @include('tags.list', ['tags' => $article->tags, 'typeTag' => 'articles'])
     <p class="blog-post-meta">{{ $article->created_at->toFormattedDateString() }}</p>
     <p>{{ $article->excerpt }}</p>
-    <a href="{{ route('article.show', ['article' => $article->slug]) }}">Читать статью</a>
+    <a href="{{ route('article.show', $article) }}">Читать статью</a>
 </div>
