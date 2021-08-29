@@ -8,9 +8,11 @@
             {{ $newsItem->title }}
     </h2>
 
+    @include('tags.list', ['tags' => $newsItem->tags])
+
     <p class="blog-post-meta">{{ $newsItem->created_at->toFormattedDateString() }}</p>
     <p>{{ $newsItem->excerpt }}</p>
     <p class="my-4">
-        <a class="btn btn-primary" href="{{ route('admin.news.show', $newsItem) }}">Просмотр</a>
+        <a class="btn btn-primary" href="{{ route('admin.news.show', ['news' => $newsItem->slug]) }}">Просмотр</a>
     </p>
 </div>

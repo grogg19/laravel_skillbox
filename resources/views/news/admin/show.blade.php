@@ -10,7 +10,7 @@
     {{ $news->body }}
     <p class="my-4">
         @can('update', $news)
-        <a class="btn btn-primary" href="{{ route('admin.news.edit', $news) }}">Изменить</a>
+        <a class="btn btn-primary" href="{{ route('admin.news.edit', ['news' => $news->slug]) }}">Изменить</a>
         @endcan
         <a class="btn btn-primary" href="{{ route('admin.news.index') }}">К списку новостей</a>
     </p>

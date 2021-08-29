@@ -24,6 +24,7 @@ class StoreNewsRequest extends FormRequest
      */
     public function rules()
     {
+        dump($this->news, 'rrr');
         return [
             'title' => 'required|min:5|max:100',
             'slug' => !$this->news ? 'required|unique:news' : Rule::unique('news')->ignore($this->news, 'slug'),

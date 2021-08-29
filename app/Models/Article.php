@@ -29,7 +29,6 @@ class Article extends Model implements HasTags, HasComments
         'is_published' => 'boolean'
     ];
 
-
     public function getRouteKeyName()
     {
         return 'slug';

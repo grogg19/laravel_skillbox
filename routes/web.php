@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ArticlesController::class, 'index'])->name('article.main');
 
-Route::get('/articles/tags/{tag}', [TagsController::class, 'index'])->name('tags.selectByTag');
+Route::get('/articles/tags/{tag}', [TagsController::class, 'index'])->name('tags.articles.selectByTag');
+Route::get('/news/tags/{tag}', [TagsController::class, 'index'])->name('tags.news.selectByTag');
+Route::get('/tags/{tag}', [TagsController::class, 'index'])->name('tags.selectByTag');
 
 Route::resource('article', 'ArticlesController');
 

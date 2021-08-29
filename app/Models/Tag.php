@@ -24,6 +24,11 @@ class Tag extends Model
         return $this->morphedByMany(News::class, 'taggable');
     }
 
+    public function taggable()
+    {
+        return $this->morphTo();
+    }
+
     /**
      * @return string
      */

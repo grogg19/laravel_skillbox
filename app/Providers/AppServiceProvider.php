@@ -2,12 +2,11 @@
 
 namespace App\Providers;
 
-use App\Repositories\CommentRepository;
-use App\Repositories\CommentRepositoryInterface;
 use App\Repositories\NewsRepository;
 use App\Repositories\NewsRepositoryInterface;
 use App\Repositories\TagRepository;
 use App\Repositories\TagRepositoryInterface;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\ArticleRepositoryInterface;
@@ -25,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
-        $this->app->bind(CommentRepositoryInterface::class, CommentRepository::class);
         $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
         $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
         $this->app->bind(NewsRepositoryInterface::class, NewsRepository::class);
@@ -43,5 +41,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Paginator::defaultView('pagination::bootstrap-4');
+
+        Relation::morphMap([
+            'articles' => 'App\Models\Article',
+            'news' => 'App\Models\News',
+        ]);
     }
 }
