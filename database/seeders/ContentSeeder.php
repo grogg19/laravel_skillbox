@@ -25,6 +25,7 @@ class ContentSeeder extends Seeder
 
         News::factory()
             ->count(60)
+            ->hasComments(rand(2,5))
             ->afterCreating(function (News $news) use ($tags) {
                 $news->tags()->attach(
                     $tags
@@ -37,20 +38,14 @@ class ContentSeeder extends Seeder
 
         User::factory()
             ->has(Article::factory()->count(20)
+                ->hasComments(rand(2,5))
                 ->afterCreating(function (Article $article) use ($tags) {
                     $article->tags()->attach(
                         $tags
                             ->shuffle()
                             ->take(rand(1,4))
                             ->pluck('id'));
-                })
-                ->afterCreating(function (Article $article) {
-
-                    Comment::factory()->count(rand(2,5))->create([
-                        'article_id' => $article
-                    ]);
-                })
-                , 'articles')
+                }), 'articles')
             ->count(3)
             ->create()
         ;

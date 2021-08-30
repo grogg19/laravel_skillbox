@@ -46,6 +46,7 @@ class NewsRepository implements NewsRepositoryInterface
     public function getNewsBySlug(string $slug)
     {
         return News::where('slug', $slug)
+            ->with('comments')
             ->first();
     }
 

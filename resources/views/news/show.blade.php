@@ -11,6 +11,12 @@
     <p class="blog-post-meta">{{ $news->created_at->toFormattedDateString() }}</p>
     {{ $news->body }}
 
+    @auth()
+        @include('comments.form', ['model' => $news, 'comment'])
+    @endauth
+
+    @include('comments.list', ['comments' => $news->comments])
+
     <p class="my-4">
         @can('update', $news)
             @admin

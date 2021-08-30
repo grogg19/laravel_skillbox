@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('pagination::bootstrap-4');
 
         Relation::morphMap([
-            'articles' => 'App\Models\Article',
+            'article' => 'App\Models\Article',
             'news' => 'App\Models\News',
         ]);
     }

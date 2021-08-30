@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticlesController;
-use App\Http\Controllers\ArticleCommentsController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +20,7 @@ Route::get('/feedback', 'MessagesController@index')->name('page.feedback');
 Route::get('/contacts', 'MessagesController@create')->name('page.contacts');
 Route::post('/contacts/store', 'MessagesController@store')->name('message.save');
 
-Route::post('/article/{article}/comment', [ArticleCommentsController::class, 'store'])->name('article.comment.store');
+Route::post('/add/comment/{type}/{slug}/', [CommentsController::class, 'store'])->name('comment.store');
 
 Route::get('/about/', function () {
     return view('about');

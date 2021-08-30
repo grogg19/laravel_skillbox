@@ -49,7 +49,7 @@ class Article extends Model implements HasTags, HasComments
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
     public function history()

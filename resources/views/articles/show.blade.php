@@ -12,10 +12,10 @@
     {{ $article->body }}
 
     @auth()
-        @include('comments.form')
+        @include('comments.form', ['model' => $article])
     @endauth
 
-    @include('comments.list')
+    @include('comments.list', ['comments' => $article->comments])
 
     <p class="my-4">
         @can('update', $article)

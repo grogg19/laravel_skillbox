@@ -31,7 +31,8 @@ class CommentFactory extends Factory
         return [
             'body' => $this->faker->text(),
             'owner_id' => $user,
-            'article_id' => $article,
+            'commentable_type' => User::class,
+            'commentable_id' => $user->id,
         ];
     }
 }
