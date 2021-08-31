@@ -19,4 +19,6 @@ interface NewsRepositoryInterface
     public function updateNews(News $news, array $attributes);
 
     public function deleteNews(News $news);
+
+    public function getAllNewsCount();
 }

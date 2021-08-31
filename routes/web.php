@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::post('/add/comment/{type}/{slug}/', [CommentsController::class, 'store'])
 Route::get('/about/', function () {
     return view('about');
 })->name('page.about');
+
+Route::get('/statistics', [StatisticsController::class, 'index'])->name('page.statistics');
 
 require __DIR__ . '/admin.php';
 

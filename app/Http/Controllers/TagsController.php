@@ -13,8 +13,7 @@ class TagsController extends Controller
     public function index(Tag $tag)
     {
         $list = Tag::where('id', $tag->id)
-            ->with('articles')
-            ->with('news')
+            ->with(['articles', 'news'])
             ->first();
 
         return view('tags.articles_news', ['articles' => $list->articles, 'news'=> $list->news]);

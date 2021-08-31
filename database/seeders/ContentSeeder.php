@@ -37,7 +37,7 @@ class ContentSeeder extends Seeder
             ->create();
 
         User::factory()
-            ->has(Article::factory()->count(20)
+            ->has(Article::factory()->count(rand(15,25))
                 ->hasComments(rand(2,5))
                 ->afterCreating(function (Article $article) use ($tags) {
                     $article->tags()->attach(
@@ -49,5 +49,6 @@ class ContentSeeder extends Seeder
             ->count(3)
             ->create()
         ;
+
     }
 }

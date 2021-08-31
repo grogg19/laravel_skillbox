@@ -75,4 +75,9 @@ class NewsRepository implements NewsRepositoryInterface
     {
         $news->delete();
     }
+
+    public function getAllNewsCount()
+    {
+        return News::count();
+    }
 }
