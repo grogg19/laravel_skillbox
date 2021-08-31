@@ -12,18 +12,11 @@ class TagsController extends Controller
      */
     public function index(Tag $tag)
     {
-        $articles = $tag->articles()
-            ->latest()
-            ->where('is_published', 1)
-            ->with('tags')
-            ->get();
+        $list = Tag::where('id', $tag->id)
+            ->with('articles')
+            ->with('news')
+            ->first();
 
-        $news = $tag->news()
-            ->latest()
-            ->where('is_published', 1)
-            ->with('tags')
-            ->get();
-
-        return view('tags.articles_news', compact('articles', 'news'));
+        return view('tags.articles_news', ['articles' => $list->articles, 'news'=> $list->news]);
     }
 }
