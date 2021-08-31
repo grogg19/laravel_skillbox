@@ -7,7 +7,7 @@
         Статистика сайта
     </h2>
         <div class="col-12 mb-5">
-            <div class="bg-white overflow-hidden shadow-sm rounded-lg min-vh-100 text-center">
+            <div class="bg-white overflow-hidden shadow-sm rounded-lg min-vh-100">
                 <div class="d-flex ">
                     <div class="p-2 bg-white border-gray-200 row flex-row d-flex justify-content-around">
                         <div class="card col-3 m-1" style="width: 18rem;">
