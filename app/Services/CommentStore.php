@@ -7,11 +7,11 @@ use App\Models\HasComments;
 
 class CommentStore
 {
-    public function create(StoreCommentRequest $request, HasComments $article)
+    public function create(StoreCommentRequest $request, HasComments $model)
     {
         $attributes = $request->validated();
         $attributes['owner_id'] = auth()->id();
 
-        $article->comments()->create($attributes);
+        $model->comments()->create($attributes);
     }
 }

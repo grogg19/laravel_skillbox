@@ -28,4 +28,16 @@ interface ArticleRepositoryInterface
 
     public function deleteArticle(Article $article);
 
+    public function getLongestArticle();
+
+    public function getShortestArticle();
+
+    public function getAllArticlesCount();
+
+    public function getAverageQuantityArticlesActiveUser();
+
+    public function getMostChangeableArticle();
+
+    public function getMostDiscussableArticle();
+
 }

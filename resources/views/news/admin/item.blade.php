@@ -8,6 +8,8 @@
             {{ $newsItem->title }}
     </h2>
 
+    @include('tags.list', ['tags' => $newsItem->tags])
+
     <p class="blog-post-meta">{{ $newsItem->created_at->toFormattedDateString() }}</p>
     <p>{{ $newsItem->excerpt }}</p>
     <p class="my-4">

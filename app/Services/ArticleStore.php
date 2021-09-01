@@ -12,10 +12,10 @@ class ArticleStore
     /**
      * @param StoreArticleRequest $request
      * @param TagsSynchronizer $tagsSynchronizer
-     * @param TagRequest $tagsRequest
+     * @param TagRequest $tagRequest
      * @param ArticleRepositoryInterface $articleRepository
      */
-    public function create(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagsRequest, ArticleRepositoryInterface $articleRepository)
+    public function create(StoreArticleRequest $request, TagsSynchronizer $tagsSynchronizer, TagRequest $tagRequest, ArticleRepositoryInterface $articleRepository)
     {
         $attributes = $request->validated();
 
@@ -24,7 +24,7 @@ class ArticleStore
 
         $article = $articleRepository->createArticle($attributes);
 
-        $tags = $tagsRequest->getTags($request);
+        $tags = $tagRequest->getTags($request);
 
         $tagsSynchronizer->sync($tags, $article);
 

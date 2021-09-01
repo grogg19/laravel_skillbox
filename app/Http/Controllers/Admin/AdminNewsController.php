@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\News\StoreNewsRequest;
+use App\Http\Requests\Tags\TagRequest;
 use App\Repositories\NewsRepositoryInterface;
+use App\Services\TagsSynchronizer;
 
 class AdminNewsController extends Controller
 {
@@ -42,16 +44,21 @@ class AdminNewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreNewsRequest $request
+     * @param TagRequest $tagRequest
+     * @param TagsSynchronizer $tagsSynchronizer
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(StoreNewsRequest $request)
+    public function store(StoreNewsRequest $request, TagRequest $tagRequest, TagsSynchronizer $tagsSynchronizer)
     {
         $attributes = $request->validated();
 
         $attributes['is_published'] = $request->boolean('is_published');
         $attributes['author_id'] = auth()->id();
 
-        $this->newsRepository->createNews($attributes);
+        $news = $this->newsRepository->createNews($attributes);
+
+        $tags = $tagRequest->getTags($request);
+        $tagsSynchronizer->sync($tags, $news);
 
         return redirect(route('admin.news.index'))
             ->with('status', 'Новая статья успешно записана!');
@@ -95,10 +102,12 @@ class AdminNewsController extends Controller
      *
      * @param StoreNewsRequest $request
      * @param string $slug
+     * @param TagRequest $tagRequest
+     * @param TagsSynchronizer $tagsSynchronizer
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(StoreNewsRequest $request, string $slug)
+    public function update(StoreNewsRequest $request, string $slug, TagRequest $tagRequest, TagsSynchronizer $tagsSynchronizer)
     {
         $news = $this->newsRepository->getNewsBySlug($slug);
 
@@ -108,6 +117,9 @@ class AdminNewsController extends Controller
         $attributes['is_published'] = $request->boolean('is_published');
 
         $this->newsRepository->updateNews($news, $attributes);
+
+        $tags = $tagRequest->getTags($request);
+        $tagsSynchronizer->sync($tags, $news);
 
         return redirect(route('admin.news.index'))
             ->with('status', 'Новость успешно обновлена!');

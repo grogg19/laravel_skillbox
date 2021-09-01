@@ -12,6 +12,7 @@
         @endauth
         <a class="p-2 text-muted" href="{{ route('page.contacts') }}">Контакты</a>
         <a class="p-2 text-muted" href="{{ route('page.feedback') }}">Список обращений</a>
+        <a class="p-2 text-muted" href="{{ route('page.statistics') }}">Статистика сайта</a>
         @admin
         <a class="p-2 text-muted" href="{{ route('admin.index') }}">Админ. раздел</a>
         @endadmin

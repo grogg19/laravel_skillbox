@@ -8,6 +8,8 @@ class TagRepository implements TagRepositoryInterface
 {
     public function tagsCloud()
     {
-        return Tag::has('articles')->get();
+        return Tag::has('articles')
+            ->orHas('news')
+            ->get();
     }
 }

@@ -46,6 +46,7 @@ class NewsRepository implements NewsRepositoryInterface
     public function getNewsBySlug(string $slug)
     {
         return News::where('slug', $slug)
+            ->with('comments')
             ->first();
     }
 
@@ -73,5 +74,10 @@ class NewsRepository implements NewsRepositoryInterface
     public function deleteNews(News $news)
     {
         $news->delete();
+    }
+
+    public function getAllNewsCount()
+    {
+        return News::count();
     }
 }

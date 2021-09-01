@@ -1,14 +1,16 @@
 <?php
 
 use App\Http\Controllers\ArticlesController;
-use App\Http\Controllers\ArticleCommentsController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TagsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ArticlesController::class, 'index'])->name('article.main');
 
-Route::get('/articles/tags/{tag}', [TagsController::class, 'index'])->name('tags.selectByTag');
+
+Route::get('/tags/{tag}', [TagsController::class, 'index'])->name('tags.selectByTag');
 
 Route::resource('article', 'ArticlesController');
 
@@ -19,11 +21,14 @@ Route::get('/feedback', 'MessagesController@index')->name('page.feedback');
 Route::get('/contacts', 'MessagesController@create')->name('page.contacts');
 Route::post('/contacts/store', 'MessagesController@store')->name('message.save');
 
-Route::post('/article/{article}/comment', [ArticleCommentsController::class, 'store'])->name('article.comment.store');
+Route::post('/articles/comment/{article}/add/', [CommentsController::class, 'storeCommentArticle'])->name('article.comment.store');
+Route::post('/news/comment/{news}/add/', [CommentsController::class, 'storeCommentNews'])->name('news.comment.store');
 
 Route::get('/about/', function () {
     return view('about');
 })->name('page.about');
+
+Route::get('/statistics', [StatisticsController::class, 'index'])->name('page.statistics');
 
 require __DIR__ . '/admin.php';
 

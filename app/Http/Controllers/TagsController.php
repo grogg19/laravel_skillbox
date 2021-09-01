@@ -8,17 +8,14 @@ class TagsController extends Controller
 {
     /**
      * @param Tag $tag
-     * @param int $perPage
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index(Tag $tag, int $perPage = 10)
+    public function index(Tag $tag)
     {
-        $articles = $tag->articles()
-            ->latest()
-            ->where('is_published', 1)
-            ->with('tags')
-            ->paginate($perPage);
+        $list = Tag::where('id', $tag->id)
+            ->with(['articles', 'news'])
+            ->first();
 
-        return view('index', compact('articles'));
+        return view('tags.articles_news', ['articles' => $list->articles, 'news'=> $list->news]);
     }
 }

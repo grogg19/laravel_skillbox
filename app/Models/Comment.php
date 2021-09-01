@@ -18,6 +18,11 @@ class Comment extends Model
 
     public function article()
     {
-        return $this->belongsTo(Article::class);
+        return $this->mo(Article::class);
+    }
+
+    public function commentable()
+    {
+        return $this->morphTo();
     }
 }

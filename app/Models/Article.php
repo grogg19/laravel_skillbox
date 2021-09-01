@@ -29,15 +29,17 @@ class Article extends Model implements HasTags, HasComments
         'is_published' => 'boolean'
     ];
 
-
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function user()
@@ -47,12 +49,12 @@ class Article extends Model implements HasTags, HasComments
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
     public function history()
     {
-        return $this->belongsToMany(ArticleHistory::class, 'article_histories', 'article_id', 'user_id')
+        return $this->belongsToMany(User::class, 'article_histories', 'article_id', 'user_id')
             ->using(ArticleHistory::class)
             ->withPivot(['before', 'after'])
             ->withTimestamps();
