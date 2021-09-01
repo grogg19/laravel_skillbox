@@ -12,7 +12,7 @@
     {{ $article->body }}
 
     @auth()
-        @include('comments.form', ['model' => $article])
+        @include('comments.form', ['action' => route('article.comment.store', $article)])
     @endauth
 
     @include('comments.list', ['comments' => $article->comments])

@@ -1,5 +1,5 @@
 @include('errors.list')
-<form method="post" action="{{ route('comment.store', ['slug' => $model, 'type' => $model->getMorphClass()]) }}" class="mt-4">
+<form method="post" action="{{ $action }}" class="mt-4">
     @csrf
     <div class="mb-3">
         <label for="addComment" class="form-label fw-bolder">Оставить комментарий:</label>
