@@ -32,8 +32,6 @@ interface ArticleRepositoryInterface
 
     public function getShortestArticle();
 
-    public function getAuthorManiac();
-
     public function getAllArticlesCount();
 
     public function getAverageQuantityArticlesActiveUser();

@@ -116,15 +116,6 @@ class ArticleRepository implements ArticleRepositoryInterface
             ->first();
     }
 
-    public function getAuthorManiac()
-    {
-        return Article::leftJoin('users', 'users.id', '=', 'articles.owner_id')
-            ->select('users.name', DB::raw('count(*) as articles_count'))
-            ->groupBy('users.name')
-            ->orderBy('articles_count', 'desc')
-            ->first();
-    }
-
     public function getAverageQuantityArticlesActiveUser(): int
     {
         return Article::leftJoin('users', 'users.id', '=', 'articles.owner_id')
@@ -136,20 +127,17 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function getMostChangeableArticle()
     {
-        return Article::leftJoin('article_histories', 'article_histories.article_id', '=', 'articles.id')
-            ->select('articles.title', 'articles.slug', DB::raw('count(*) as total_changes'))
-            ->groupBy('articles.slug')
-            ->orderBy('total_changes', 'desc')
+        return Article::whereHas('history')
+            ->withCount('history')
+            ->orderByDesc('history_count')
             ->first();
     }
 
     public function getMostDiscussableArticle()
     {
-        return Article::leftJoin('comments', 'comments.commentable_id', '=', 'articles.id')
-            ->select('articles.title', 'articles.slug', DB::raw('count(*) as total_comments'))
-            ->where('comments.commentable_type', '=', 'article')
-            ->groupBy('articles.slug')
-            ->orderBy('total_comments', 'desc')
+        return Article::whereHas('comments')
+            ->orderByDesc('comments_count')
+            ->withCount('comments')
             ->first();
     }
 
