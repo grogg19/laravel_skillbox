@@ -50,6 +50,8 @@ RUN npm install -g bower grunt-cli gulp
 
 
 RUN apt install mc -y
+RUN apt install supervisor
+RUN apt install redis-server -y
 
 ENV LOG_STDOUT **Boolean**
 ENV LOG_STDERR **Boolean**
@@ -63,6 +65,8 @@ ENV DATE_TIMEZONE UTC
 
 COPY setups/default_nginx.conf /etc/nginx/sites-available/default
 COPY setups/www_php-fpm.conf /etc/php/7.4/fpm/pool.d/www.conf
+COPY setups/supervisord.conf /etc/supervisor/supervisord.conf
+COPY setups/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
 
 RUN mkdir /var/log/php
 
@@ -78,7 +82,7 @@ RUN mkdir /home/www
 RUN chown -R www-data:www-data /home/www
 RUN chmod 0777 -R /var/run/mysqld
 
-EXPOSE 3306 80
+EXPOSE 3306 80 9001
 
 RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
@@ -100,5 +104,7 @@ RUN chmod +x /usr/sbin/cs.sh
 RUN bash /usr/sbin/cs.sh
 
 RUN bash /db-init.sh
+
+WORKDIR /home/www
 
 CMD ["/usr/sbin/run-lemp.sh"]
