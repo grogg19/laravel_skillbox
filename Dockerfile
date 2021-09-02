@@ -28,7 +28,7 @@ RUN apt-get install -y \
     php7.4-readline \
     php7.4-xml \
     php7.4-mbstring \
-    php7.4-gd2 \
+    php7.4-gd \
     php7.4-imagick \
     php7.4-opcache \
     php7.4-redis \
@@ -36,7 +36,7 @@ RUN apt-get install -y \
     php7.4-iconv \
     php7.4-simplexml \
     php7.4-xmlreader \
-    php7.4-zlib \
+#    php7.4-zlib \
     php7.4-bcmath
 
 RUN apt-get install php7.4-xdebug # Xdebug debugger
