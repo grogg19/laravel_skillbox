@@ -2,7 +2,7 @@
 # Полный отчет
 <ul>
 @foreach($reportItems as $item)
-    <li>{{ $item->name }}: {{ $item->value }}</li>
+    <li>{{ $item['title'] }}: {{ $item['value'] }}</li>
 @endforeach
 </ul>
 @endcomponent

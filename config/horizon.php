@@ -188,6 +188,7 @@ return [
         'local' => [
             'supervisor-1' => [
                 'maxProcesses' => 3,
+                'queue' => ['default', 'reports'],
             ],
         ],
     ],

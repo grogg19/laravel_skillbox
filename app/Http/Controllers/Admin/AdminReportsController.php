@@ -23,7 +23,7 @@ class AdminReportsController extends Controller
     {
         $data = collect($request->except(['_token']));
 
-        TotalReport::dispatch(auth()->user(), $data);
+        TotalReport::dispatch(auth()->user(), $data)->onQueue('reports');
         return back()
             ->with(['status' => 'Запрос на генерацию отчета отправлен.']);
     }

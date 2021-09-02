@@ -9,7 +9,7 @@ use App\Repositories\CommentRepository;
 use App\Repositories\NewsRepositoryInterface;
 use App\Repositories\TagRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
