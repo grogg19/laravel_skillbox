@@ -20,5 +20,5 @@ interface NewsRepositoryInterface
 
     public function deleteNews(News $news);
 
-    public function getAllNewsCount();
+    public function getAllNewsCount(): int;
 }

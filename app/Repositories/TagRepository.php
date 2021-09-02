@@ -12,4 +12,9 @@ class TagRepository implements TagRepositoryInterface
             ->orHas('news')
             ->get();
     }
+
+    public function getAllTagsCount(): int
+    {
+        return Tag::count();
+    }
 }

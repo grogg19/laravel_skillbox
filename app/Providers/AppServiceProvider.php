@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\CommentRepository;
+use App\Repositories\CommentRepositoryInterface;
 use App\Repositories\NewsRepository;
 use App\Repositories\NewsRepositoryInterface;
 use App\Repositories\TagRepository;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
         $this->app->bind(NewsRepositoryInterface::class, NewsRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(CommentRepositoryInterface::class, CommentRepository::class);
     }
 
     /**
@@ -44,10 +47,5 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Paginator::defaultView('pagination::bootstrap-4');
-
-        Relation::morphMap([
-            'article' => 'App\Models\Article',
-            'news' => 'App\Models\News',
-        ]);
     }
 }

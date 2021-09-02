@@ -12,4 +12,9 @@ class UserRepository implements UserRepositoryInterface
             ->orderByDesc('articles_count')
             ->first();
     }
+
+    public function getAllUsersCount(): int
+    {
+        return User::count();
+    }
 }
