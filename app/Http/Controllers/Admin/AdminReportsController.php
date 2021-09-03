@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\TotalReport;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 
 class AdminReportsController extends Controller
@@ -21,7 +22,7 @@ class AdminReportsController extends Controller
 
     public function makeReport(Request $request)
     {
-        $data = collect($request->except(['_token']));
+        $data = new Collection($request->except(['_token']));
 
         TotalReport::dispatch(auth()->user(), $data)->onQueue('reports');
         return back()

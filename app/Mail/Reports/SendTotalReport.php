@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\Mail;
+namespace App\Mail\Reports;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,15 +13,18 @@ class SendTotalReport extends Mailable
     use Queueable, SerializesModels;
 
     public $reportItems;
+    public $pathToFile;
+
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Collection $reportItems)
+    public function __construct(Collection $reportItems, string $pathToFile)
     {
         $this->reportItems = $reportItems;
+        $this->pathToFile = $pathToFile;
     }
 
     /**
@@ -31,6 +34,6 @@ class SendTotalReport extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.total-report-list');
+        return $this->markdown('mail.total-report-list')->attach(storage_path('app/public/' . $this->pathToFile));
     }
 }

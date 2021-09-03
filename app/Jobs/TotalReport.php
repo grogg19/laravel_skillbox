@@ -2,21 +2,23 @@
 
 namespace App\Jobs;
 
-use App\Mail\Mail\SendTotalReport;
+use App\Exports\ReportExport;
+use App\Mail\Reports\SendTotalReport;
 use App\Models\User;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Repositories\CommentRepository;
 use App\Repositories\NewsRepositoryInterface;
 use App\Repositories\TagRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
-use Illuminate\Support\Collection;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Collection;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use App\Services\CreateExcelFile;
 
 class TotalReport implements ShouldQueue
 {
@@ -47,49 +49,53 @@ class TotalReport implements ShouldQueue
         NewsRepositoryInterface $newsRepository,
         UserRepositoryInterface $userRepository,
         TagRepositoryInterface $tagRepository,
-        CommentRepository $commentRepository
+        CommentRepository $commentRepository,
+        CreateExcelFile $createExcelFile
     )
     {
-
-        $reportItems = new Collection();
+        $reportItems = [];
 
         if ($this->reportTypes->has('articles')) {
-            $reportItems->put('articles', [
+            $reportItems[] = [
                 'title' => 'Статей',
                 'value' => $articleRepository->getAllArticlesCount()
-            ]);
+            ];
         }
 
         if ($this->reportTypes->has('news')) {
-            $reportItems->put('news', [
+            $reportItems[] = [
                 'title' => 'Новостей',
                 'value' => $newsRepository->getAllNewsCount()
-            ]);
+            ];
         }
 
         if ($this->reportTypes->has('tags')) {
-            $reportItems->put('tags', [
+            $reportItems[] = [
                 'title' => 'Тегов',
                 'value' => $tagRepository->getAllTagsCount()
-            ]);
+            ];
         }
 
         if ($this->reportTypes->has('users')) {
-            $reportItems->put('users', [
+            $reportItems[] = [
                 'title' => 'Пользователей',
                 'value' => $userRepository->getAllUsersCount()
-            ]);
+            ];
         }
 
         if ($this->reportTypes->has('comments')) {
-            $reportItems->put('comments', [
+            $reportItems[] = [
                 'title' => 'Комментариев',
                 'value' => $commentRepository->getAllCommentsCount()
-            ]);
+            ];
         }
 
+        $data = collect($reportItems);
+
+        $file = $createExcelFile->create(new ReportExport($data));
+
         Mail::to($this->receiverReport->email)->send(
-            new SendTotalReport($reportItems)
+            new SendTotalReport($data, $file)
         );
     }
 }
