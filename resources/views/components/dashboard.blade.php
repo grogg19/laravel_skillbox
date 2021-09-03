@@ -20,6 +20,13 @@
                     <a href="{{ route('admin.news.index') }}" class="card-link">Управление</a>
                 </div>
             </div>
+            <div class="card d-flex flex-row align-items-center m-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Отчеты</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Генерация отчетов </h6>
+                    <a href="{{ route('admin.reports.index') }}" class="card-link">Управление</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

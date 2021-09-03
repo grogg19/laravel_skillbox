@@ -32,7 +32,7 @@ interface ArticleRepositoryInterface
 
     public function getShortestArticle();
 
-    public function getAllArticlesCount();
+    public function getAllArticlesCount(): int;
 
     public function getAverageQuantityArticlesActiveUser();
 

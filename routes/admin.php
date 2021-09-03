@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminReportsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,6 +15,9 @@ Route::middleware('admin')->group( function () {
         'as' => 'admin'
     ]);
 
+    Route::get('admin/reports', [AdminReportsController::class, 'index'])->name('admin.reports.index');
+    Route::get('admin/reports/total-report', [AdminReportsController::class, 'totalReport'])->name('admin.reports.total');
+    Route::post('admin/reports', [AdminReportsController::class, 'makeReport'])->name('admin.reports.make');
 });
 
 

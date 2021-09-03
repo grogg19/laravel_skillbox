@@ -32,6 +32,11 @@ RUN apt-get install -y \
     php7.4-imagick \
     php7.4-opcache \
     php7.4-redis \
+    php7.4-zip \
+    php7.4-iconv \
+    php7.4-simplexml \
+    php7.4-xmlreader \
+#    php7.4-zlib \
     php7.4-bcmath
 
 RUN apt-get install php7.4-xdebug # Xdebug debugger

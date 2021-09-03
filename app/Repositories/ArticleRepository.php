@@ -97,7 +97,7 @@ class ArticleRepository implements ArticleRepositoryInterface
         $article->delete();
     }
 
-    public function getAllArticlesCount()
+    public function getAllArticlesCount(): int
     {
         return Article::count();
     }
