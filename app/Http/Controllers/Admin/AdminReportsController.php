@@ -22,7 +22,7 @@ class AdminReportsController extends Controller
 
     public function makeReport(Request $request)
     {
-        $data = new Collection($request->except(['_token']));
+        $data = new Collection($request->post('reports'));
 
         if ($data->isEmpty()) {
             return back()
