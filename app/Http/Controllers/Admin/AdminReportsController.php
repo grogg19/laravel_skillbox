@@ -24,6 +24,11 @@ class AdminReportsController extends Controller
     {
         $data = new Collection($request->except(['_token']));
 
+        if ($data->isEmpty()) {
+            return back()
+                ->withErrors(['Ни один пункт не выбран']);
+        }
+
         TotalReport::dispatch(auth()->user(), $data)->onQueue('reports');
         return back()
             ->with(['status' => 'Запрос на генерацию отчета отправлен.']);

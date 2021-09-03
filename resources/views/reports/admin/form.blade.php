@@ -1,4 +1,5 @@
 <div class="my-5">
+    @include('errors.list')
     <form method="post" action="{{ route('admin.reports.make') }}">
         @csrf
         <div class="form-check form-switch">
