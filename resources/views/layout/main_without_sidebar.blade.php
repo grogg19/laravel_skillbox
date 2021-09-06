@@ -9,7 +9,7 @@
 
     <title>@yield('title', 'Laravel Skillbox')</title>
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <!-- Bootstrap core CSS -->
 {{--    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">--}}
 
@@ -17,6 +17,9 @@
     <link href="{{ asset('css/blog.css') }}" rel="stylesheet">
     <link href="{{ asset('css/toasts.css') }}" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 
     <!-- Scripts -->
 </head>
@@ -31,7 +34,7 @@
 
 </div>
 
-<main role="main" class="container">
+<main role="main" class="container" id="app">
     <div class="row">
         <div class="col-md-12 blog-main">
             @if (session('status'))
