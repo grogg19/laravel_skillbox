@@ -52,7 +52,7 @@ RUN apt-get install git nodejs npm nano tree vim curl wget ftp -y
 
 RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 
-RUN npm install -g bower grunt-cli gulp
+RUN npm install -g bower grunt-cli gulp laravel-echo
 
 
 RUN apt install mc -y
@@ -88,7 +88,7 @@ RUN mkdir /home/www
 RUN chown -R www-data:www-data /home/www
 RUN chmod 0777 -R /var/run/mysqld
 
-EXPOSE 3306 80 9001
+EXPOSE 3306 80 6001
 
 RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
@@ -110,6 +110,8 @@ RUN chmod +x /usr/sbin/cs.sh
 RUN bash /usr/sbin/cs.sh
 
 RUN bash /db-init.sh
+
+RUN ln -s /root/.nvm/versions/node/v16.8.0/bin/laravel-echo-server /usr/bin/laravel-echo-server
 
 WORKDIR /home/www
 
