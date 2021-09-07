@@ -29,7 +29,7 @@ class ArticleUpdated implements ShouldBroadcast
     {
         $this->article = $article;
         $this->updatedFields = 'Измененые поля: ' . implode(', ', $article->historyByPivot->last()->pivot->after);
-        $this->linkToArticle = route('article.show', $article);
+        $this->linkToArticle = route('article.show', $article, false);
 
     }
 

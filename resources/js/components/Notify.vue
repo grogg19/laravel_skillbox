@@ -1,7 +1,8 @@
 <template>
     <transition name="event-classes-transition"
                 enter-active-class="animated fadeInUpBig"
-                leave-active-class="animated fadeOutDownBig">
+                leave-active-class="animated fadeOutDownBig"
+                ontimeupdate="">
         <div class="position-fixed bottom-0 end-0 p-3 notify" style="z-index: 11" v-if="showBox" v-on:click="blockHide">
             <h6>{{ headNotify }}</h6>
             <p>{{ updatedFields }}</p>
@@ -36,14 +37,23 @@ export default {
         }
     },
     mounted() {
-        Echo.private('articles')
-            .listen('ArticleUpdated', (data) => {
-            this.showBox = true
-            this.headNotify = data.article.title
-            this.updatedFields = data.updatedFields
-            this.linkToArticle = data.linkToArticle
-        });
+        if (typeof Echo !== 'undefined') {
+            Echo.private('articles')
+                .listen('ArticleUpdated', (data) => {
+                    this.showBox = true
+                    this.headNotify = data.article.title
+                    this.updatedFields = data.updatedFields
+                    this.linkToArticle = data.linkToArticle
+                })
+        }
     },
+
+    updated() {
+        setTimeout( () => {
+            this.blockHide()
+        }, 5000)
+    },
+
     methods: {
         blockHide() {
             this.showBox = false
