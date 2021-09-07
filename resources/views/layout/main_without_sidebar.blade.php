@@ -37,6 +37,7 @@
 <main role="main" class="container" id="app">
     <div class="row">
         <div class="col-md-12 blog-main">
+            <notify></notify>
             @if (session('status'))
                 @include('flash.success')
             @endif

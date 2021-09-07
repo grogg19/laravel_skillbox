@@ -10,6 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@popperjs/core": "^2.9.3",
         "alpinejs": "^3.2.3",
         "axios": "^0.21.1",
         "bootstrap": "^5.1.0",
@@ -17,7 +18,6 @@
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.37.5",
         "sass-loader": "^12.1.0",
-        "@popperjs/core": "^2.9.3",
         "vue-loader": "^15.9.8",
         "vue-template-compiler": "^2.6.14"
     },

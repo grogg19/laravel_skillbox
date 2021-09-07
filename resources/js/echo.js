@@ -9,8 +9,7 @@ window.Echo = new Echo({
     host: window.location.hostname + ':6001',
 });
 
-// Vue.component('task-update', require('./components/TaskUpdate').default)
-// Vue.component('chat', require('./components/Chat').default)
+Vue.component('notify', require('./components/Notify').default)
 
 const app = new Vue({
     el: '#app'

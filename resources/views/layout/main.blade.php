@@ -35,6 +35,7 @@
 </div>
 
 <main role="main" class="container" id="app">
+    <notify></notify>
     <div class="row">
         <div class="col-md-9 blog-main">
             @if (session('status'))
