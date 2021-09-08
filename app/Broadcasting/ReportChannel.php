@@ -4,8 +4,9 @@ namespace App\Broadcasting;
 
 use App\Models\User;
 
-class ArticleChannel
+class ReportChannel
 {
+
     /**
      * Create a new channel instance.
      *
@@ -24,6 +25,6 @@ class ArticleChannel
      */
     public function join(User $user)
     {
-        return $user->isAdmin();
+        return $user->isAdmin() ;
     }
 }

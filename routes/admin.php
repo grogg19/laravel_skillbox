@@ -17,7 +17,7 @@ Route::middleware('admin')->group( function () {
 
     Route::get('admin/reports', [AdminReportsController::class, 'index'])->name('admin.reports.index');
     Route::get('admin/reports/total-report', [AdminReportsController::class, 'totalReport'])->name('admin.reports.total');
-    Route::post('admin/reports', [AdminReportsController::class, 'makeReport'])->name('admin.reports.make');
+    Route::post('admin/reports/total-report', [AdminReportsController::class, 'makeReport'])->name('admin.reports.make');
 });
 
 

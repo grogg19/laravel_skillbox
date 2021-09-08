@@ -3,23 +3,25 @@
                 enter-active-class="animated fadeInUpBig"
                 leave-active-class="animated fadeOutDownBig"
                 ontimeupdate="">
-        <div class="position-fixed bottom-0 end-0 p-3 notify" style="z-index: 11" v-if="showBox" v-on:click="blockHide">
-            <h6>{{ headNotify }}</h6>
-            <p>{{ updatedFields }}</p>
-            <a v-bind:href="linkToArticle">Посмотреть</a>
-        </div>
+
+                <div class="position-fixed bottom-0 end-0 p-3 notify" title="Нажмите чтобы закрыть" v-if="showBox" v-on:click="blockHide">
+                    <h6>{{ headNotify }}</h6>
+                    <p>{{ updatedFields }}</p>
+                    <a v-bind:href="linkToArticle">Посмотреть</a>
+                </div>
     </transition>
 </template>
 
 <style>
     .notify {
-        background-color: #60cd8e;
-        border: 1px #2a5164 solid;
+        background-color: #eaeeeb;
+        border: 1px #1b3431 solid;
         border-radius: 10px;
-        box-shadow: 1px 1px 10px 10px rgba(50, 50, 50, 0.1);
+        box-shadow: 3px 3px 10px 10px rgba(50, 50, 50, 0.2);
         min-width: 320px;
+        max-width: 70%;
         margin: 20px;
-
+        z-index: 11;
     }
 
 </style>
@@ -30,7 +32,6 @@ export default {
     data() {
         return {
             showBox: false,
-            channel: null,
             headNotify: '',
             updatedFields: '',
             linkToArticle: ''
