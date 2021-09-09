@@ -8,6 +8,7 @@ use App\Events\ArticleUpdated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Article
@@ -86,6 +87,18 @@ class Article extends Model implements HasTags, HasComments
                 'before' => Arr::only($article->fresh()->toArray(), array_keys($after)),
                 'after' => $after
             ]);
+        });
+
+        static::created(function () {
+            Cache::tags(['articles'])->flush();
+        });
+
+        static::updated(function () {
+            Cache::tags(['articles'])->flush();
+        });
+
+        static::deleted(function () {
+            Cache::tags(['articles'])->flush();
         });
     }
 

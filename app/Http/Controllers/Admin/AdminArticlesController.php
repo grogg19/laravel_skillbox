@@ -10,6 +10,7 @@ use App\Repositories\ArticleRepositoryInterface;
 use App\Services\ArticleStore;
 use App\Services\TagsSynchronizer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class AdminArticlesController extends Controller
@@ -25,9 +26,11 @@ class AdminArticlesController extends Controller
         $this->articleRepository = $articleRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $articles = $this->articleRepository->listAllArticles();
+        $articles = Cache::tags(['articles', 'tags', 'users'])->remember('admin-list-articles-page-' . $request->get('page') ?? 1, 3600 * 24, function () {
+            return $this->articleRepository->listAllArticles();
+        });
 
         return view('articles.admin.list', compact('articles'));
     }
@@ -71,7 +74,9 @@ class AdminArticlesController extends Controller
      */
     public function show($slug)
     {
-        $article = $this->articleRepository->getArticleBySlug($slug);
+        $article = Cache::tags(['articles', 'tags', 'users'])->remember('admin-article|' . $slug, 3600 * 24, function () use ($slug) {
+            return $this->articleRepository->getArticleBySlug($slug);
+        });
 
         if ($article === null) {
             return redirect(route('article.main'))

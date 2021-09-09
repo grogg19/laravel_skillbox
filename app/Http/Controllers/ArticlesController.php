@@ -8,6 +8,8 @@ use App\Models\Article;
 use App\Repositories\ArticleRepositoryInterface;
 use App\Services\ArticleStore;
 use App\Services\TagsSynchronizer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 /**
@@ -33,11 +35,14 @@ class ArticlesController extends Controller
     /**
      * Display a listing of the articles.
      *
+     * @param Request $request
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $articles = $this->articleRepository->listArticles();
+        $articles = Cache::tags(['articles', 'tags', 'users'])->remember('list-articles-page-' . $request->get('page') ?? 1, 3600 * 24, function () {
+            return $this->articleRepository->listArticles();
+        });
 
         return view('index', compact('articles'));
     }
@@ -90,7 +95,10 @@ class ArticlesController extends Controller
      */
     public function show($slug)
     {
-        $article = $this->articleRepository->getArticleBySlug($slug);
+        $article = Cache::tags(['articles', 'tags', 'users'])->remember('article|' . $slug, 3600 * 24, function () use ($slug) {
+            return $this->articleRepository->getArticleBySlug($slug);
+        });
+
 
         if ($article === null) {
             return redirect(route('article.main'))
