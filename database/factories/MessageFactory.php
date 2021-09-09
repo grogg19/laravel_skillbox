@@ -23,7 +23,8 @@ class MessageFactory extends Factory
     {
         return [
             'email' => $this->faker->safeEmail(),
-            'body' =>$this->faker->text()
+            'body' => $this->faker->text(),
+            'created_at' => $this->faker->dateTimeBetween('-1 month', 'now')
         ];
     }
 }
