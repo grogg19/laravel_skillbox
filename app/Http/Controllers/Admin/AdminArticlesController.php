@@ -28,7 +28,7 @@ class AdminArticlesController extends Controller
 
     public function index(Request $request)
     {
-        $articles = Cache::tags(['articles', 'tags', 'users'])->remember('admin-list-articles-page-' . $request->get('page') ?? 1, 3600 * 24, function () {
+        $articles = Cache::tags(['articles', 'tags'])->remember('admin-list-articles-page-' . ($request->get('page') ?: '1'), 3600 * 24, function () {
             return $this->articleRepository->listAllArticles();
         });
 
@@ -74,7 +74,7 @@ class AdminArticlesController extends Controller
      */
     public function show($slug)
     {
-        $article = Cache::tags(['articles', 'tags', 'users'])->remember('admin-article|' . $slug, 3600 * 24, function () use ($slug) {
+        $article = Cache::tags(['articles', 'comments', 'tags'])->remember('admin-article|' . $slug, 3600 * 24, function () use ($slug) {
             return $this->articleRepository->getArticleBySlug($slug);
         });
 

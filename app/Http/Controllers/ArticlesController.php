@@ -40,7 +40,7 @@ class ArticlesController extends Controller
      */
     public function index(Request $request): View
     {
-        $articles = Cache::tags(['articles', 'tags', 'users'])->remember('list-articles-page-' . $request->get('page') ?? 1, 3600 * 24, function () {
+        $articles = Cache::tags(['articles', 'tags'])->remember('list-articles-page-' . ($request->get('page') ?: 1), 3600 * 24, function () {
             return $this->articleRepository->listArticles();
         });
 
@@ -95,7 +95,7 @@ class ArticlesController extends Controller
      */
     public function show($slug)
     {
-        $article = Cache::tags(['articles', 'tags', 'users'])->remember('article|' . $slug, 3600 * 24, function () use ($slug) {
+        $article = Cache::tags(['articles', 'comments', 'tags'])->remember('article|' . $slug, 3600 * 24, function () use ($slug) {
             return $this->articleRepository->getArticleBySlug($slug);
         });
 
