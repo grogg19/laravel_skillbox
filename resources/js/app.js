@@ -1,3 +1,2 @@
-require('./lodash')
 require('alpinejs');
 

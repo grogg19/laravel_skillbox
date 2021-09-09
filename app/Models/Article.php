@@ -60,6 +60,15 @@ class Article extends Model implements HasTags, HasComments
             ->withTimestamps();
     }
 
+    public function historyByPivot()
+    {
+        return $this->belongsToMany(User::class, 'article_histories', 'article_id', 'user_id')
+            ->using(ArticleHistory::class)
+            ->withPivot(['before', 'after'])
+            ->withTimestamps()
+            ->orderByPivot('updated_at');
+    }
+
     public function addComment($attributes)
     {
         $this->comments()->create($attributes);

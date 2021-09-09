@@ -11,13 +11,11 @@ class ReportExport implements FromCollection
 
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->data = new Collection([$data]);
     }
 
     public function collection()
     {
-        return new Collection([
-            $this->data
-        ]);
+        return $this->data;
     }
 }

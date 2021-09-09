@@ -18,6 +18,9 @@
     <link href="{{ asset('css/toasts.css') }}" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
     <!-- Scripts -->
 </head>
 
@@ -31,7 +34,8 @@
 
 </div>
 
-<main role="main" class="container">
+<main role="main" class="container" id="app">
+    <notify></notify>
     <div class="row">
         <div class="col-md-9 blog-main">
             @if (session('status'))

@@ -7,7 +7,10 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ asset('js/app.js') }}" ></script>
-    <script src="{{ asset('js/bootstrap.js') }}" ></script>
-
+    <script src="{{ mix('js/app.js') }}" ></script>
+    <script src="{{ mix('js/bootstrap.js') }}" ></script>
+    @admin
+    <script src="{{ mix('js/echo.js') }}" ></script>
+    @endadmin
+    <script src="{{ mix('js/vue-app.js') }}" ></script>
 <script src="{{ asset('js/scripts.js') }}" ></script>
