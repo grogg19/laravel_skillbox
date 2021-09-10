@@ -7,6 +7,8 @@ use App\Http\Requests\News\StoreNewsRequest;
 use App\Http\Requests\Tags\TagRequest;
 use App\Repositories\NewsRepositoryInterface;
 use App\Services\TagsSynchronizer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class AdminNewsController extends Controller
 {
@@ -23,9 +25,11 @@ class AdminNewsController extends Controller
      * * Display a listing of the resource.
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $news = $this->newsRepository->listAllNews();
+        $news = Cache::tags(['news', 'tags'])->remember('admin-list-news-page-' . ($request->get('page') ?: 1), 3600 * 24, function () {
+            return $this->newsRepository->listAllNews();
+        });
 
         return view('news.admin.list', compact('news'));
     }
@@ -71,7 +75,9 @@ class AdminNewsController extends Controller
      */
     public function show($slug)
     {
-        $news = $this->newsRepository->getNewsBySlug($slug);
+        $news = Cache::tags(['news', 'tags'])->remember('admin-news|' . $slug, 3600 * 24, function () use ($slug) {
+            return $this->newsRepository->getNewsBySlug($slug);
+        });
 
         if ($news === null) {
             return redirect(route('admin.news.main'))

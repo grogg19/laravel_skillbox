@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\NewsRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class NewsController extends Controller
 {
@@ -19,9 +21,11 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $news = $this->newsRepository->listPublishedNews();
+        $news = Cache::tags(['news', 'tags'])->remember('list-news-page-' . ($request->get('page') ?: 1), 3600 * 24, function () {
+            return $this->newsRepository->listPublishedNews();
+        });
 
         return view('news.list', compact('news'));
     }
@@ -35,7 +39,9 @@ class NewsController extends Controller
      */
     public function show($slug)
     {
-        $news = $this->newsRepository->getNewsBySlug($slug);
+        $news = Cache::tags(['news', 'tags'])->remember('news|' . $slug, 3600 * 24, function () use ($slug) {
+            return $this->newsRepository->getNewsBySlug($slug);
+        });
 
         if ($news === null) {
             return redirect(route('news.main'))
