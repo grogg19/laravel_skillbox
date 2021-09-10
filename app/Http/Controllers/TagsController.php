@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use Illuminate\Support\Facades\Cache;
 
 class TagsController extends Controller
 {
@@ -12,9 +13,11 @@ class TagsController extends Controller
      */
     public function index(Tag $tag)
     {
-        $list = Tag::where('id', $tag->id)
-            ->with(['articles', 'news'])
-            ->first();
+        $list = Cache::tags(['articles', 'news'])->remember('list-articles-news', 3600 * 24, function () use ($tag) {
+            return Tag::where('id', $tag->id)
+                ->with(['articles', 'news'])
+                ->first();
+        });
 
         return view('tags.articles_news', ['articles' => $list->articles, 'news'=> $list->news]);
     }
