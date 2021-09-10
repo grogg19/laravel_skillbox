@@ -47,6 +47,7 @@ class ArticleRepository implements ArticleRepositoryInterface
     public function getArticleBySlug(string $slug)
     {
         return Article::where('slug', $slug)
+            ->with('tags')
             ->with('comments')
             ->first();
     }

@@ -17,6 +17,7 @@ class NewsRepository implements NewsRepositoryInterface
     {
         return News::latest()
             ->where('is_published', true)
+            ->with('tags')
             ->paginate($perPage);
     }
 
@@ -27,6 +28,7 @@ class NewsRepository implements NewsRepositoryInterface
     public function listAllNews(int $perPage = 20): LengthAwarePaginator
     {
         return News::latest()
+            ->with('tags')
             ->paginate($perPage);
     }
 
@@ -46,6 +48,7 @@ class NewsRepository implements NewsRepositoryInterface
     public function getNewsBySlug(string $slug)
     {
         return News::where('slug', $slug)
+            ->with('tags')
             ->with('comments')
             ->first();
     }
