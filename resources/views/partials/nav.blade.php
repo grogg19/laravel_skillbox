@@ -6,6 +6,7 @@
         @auth()
             @admin
                 <a class="p-2 text-muted" href="{{ route('admin.article.create') }}">Создать статью</a>
+                <a class="p-2 text-muted" href="{{ route('admin.news.create') }}">Создать новость</a>
             @else
                 <a class="p-2 text-muted" href="{{ route('article.create') }}">Создать статью</a>
             @endadmin

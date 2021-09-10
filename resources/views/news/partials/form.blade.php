@@ -11,7 +11,7 @@
     <textarea class="form-control" id="excerpt" rows="3" name="excerpt" >{{ old('excerpt', $news->excerpt ?? '') }}</textarea>
 </div>
 <div class="form-group">
-    <label for="body">Текст статьи:</label>
+    <label for="body">Текст новости:</label>
     <textarea class="form-control" id="body" rows="3" name="body">{{ old('body', $news->body ?? '') }}</textarea>
 </div>
 <div class="form-group">
