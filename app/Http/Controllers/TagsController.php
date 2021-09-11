@@ -13,7 +13,7 @@ class TagsController extends Controller
      */
     public function index(Tag $tag)
     {
-        $list = Cache::tags(['articles', 'news'])->remember('list-articles-news', 3600 * 24, function () use ($tag) {
+        $list = Cache::tags(['articles', 'news', 'tags'])->remember('list-articles-news', 3600 * 24, function () use ($tag) {
             return Tag::where('id', $tag->id)
                 ->with(['articles', 'news'])
                 ->first();
