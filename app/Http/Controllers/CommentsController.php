@@ -29,6 +29,12 @@ class CommentsController extends Controller
             ->with('status', 'Ваш комментарий успешно опубликован.');
     }
 
+    /**
+     * @param StoreCommentRequest $request
+     * @param CommentStore $commentStore
+     * @param News $news
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function storeCommentNews(StoreCommentRequest $request, CommentStore $commentStore, News $news)
     {
         $commentStore->create($request, $news);
