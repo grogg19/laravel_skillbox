@@ -41,7 +41,7 @@ class NewsController extends Controller
      */
     public function show($slug)
     {
-        $news = Cache::tags(['news', 'tags'])->remember('news|' . $slug, 3600 * 24, function () use ($slug) {
+        $news = Cache::tags(['news', 'tags', 'comments'])->remember('news|' . $slug, 3600 * 24, function () use ($slug) {
             return $this->newsRepository->getNewsBySlug($slug);
         });
 
