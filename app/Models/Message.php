@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\CacheCleanable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
@@ -12,16 +13,9 @@ use Illuminate\Support\Facades\Cache;
  */
 class Message extends Model
 {
-    use HasFactory;
+    use HasFactory, CacheCleanable;
 
     protected $guarded = [];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function () {
-            Cache::tags(['messages'])->flush();
-        });
-    }
+    protected static $tags = ['messages'];
 }

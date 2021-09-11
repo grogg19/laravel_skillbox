@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\CacheCleanable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, CacheCleanable;
 
     /**
      * The attributes that are mass assignable.
@@ -41,18 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    protected static $tags = ['users'];
 
-        static::created(function () {
-            Cache::tags(['users'])->flush();
-        });
-
-        static::updated(function () {
-            Cache::tags(['users'])->flush();
-        });
-    }
 
     public function articles()
     {

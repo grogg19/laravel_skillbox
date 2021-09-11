@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use App\Helpers\CacheCleanable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
 
 class Tag extends Model
 {
-    use HasFactory;
+    use HasFactory, CacheCleanable;
 
     /**
      * @var string[]
      */
     protected $fillable = ['name'];
+
+    protected static $tags = ['tags'];
 
     public function articles()
     {

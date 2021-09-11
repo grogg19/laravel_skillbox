@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Helpers\CacheCleanable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
 class News extends Model implements HasTags, HasComments
 {
-    use HasFactory;
+    use HasFactory, CacheCleanable;
 
     protected $guarded = ['id'];
+
+    protected static $tags = ['news'];
 
     protected $casts = [
         'is_published' => 'boolean'
@@ -19,23 +22,6 @@ class News extends Model implements HasTags, HasComments
     public function getRouteKeyName()
     {
         return 'slug';
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function () {
-            Cache::tags(['news'])->flush();
-        });
-
-        static::updated(function () {
-            Cache::tags(['news'])->flush();
-        });
-
-        static::deleted(function () {
-            Cache::tags(['news'])->flush();
-        });
     }
 
     public function user()
