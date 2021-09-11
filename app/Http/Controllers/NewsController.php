@@ -23,7 +23,9 @@ class NewsController extends Controller
      */
     public function index(Request $request)
     {
-        $news = Cache::tags(['news', 'tags'])->remember('list-news-page-' . ($request->get('page') ?: 1), 3600 * 24, function () {
+        $page = $request->get('page') ?: 1;
+
+        $news = Cache::tags(['news', 'tags'])->remember('list-news-page-' . $page, 3600 * 24, function () {
             return $this->newsRepository->listPublishedNews();
         });
 

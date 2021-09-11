@@ -40,7 +40,9 @@ class ArticlesController extends Controller
      */
     public function index(Request $request): View
     {
-        $articles = Cache::tags(['articles', 'tags'])->remember('list-articles-page-' . ($request->get('page') ?: 1), 3600 * 24, function () {
+        $page = $request->get('page') ?: 1;
+
+        $articles = Cache::tags(['articles', 'tags'])->remember('list-articles-page-' . $page, 3600 * 24, function () {
             return $this->articleRepository->listArticles();
         });
 

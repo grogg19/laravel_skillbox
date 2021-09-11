@@ -8,6 +8,8 @@ use App\Http\Requests\Tags\TagRequest;
 use App\Repositories\NewsRepositoryInterface;
 use App\Services\TagsSynchronizer;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
 
 class AdminNewsController extends Controller
@@ -27,7 +29,9 @@ class AdminNewsController extends Controller
      */
     public function index(Request $request)
     {
-        $news = Cache::tags(['news', 'tags'])->remember('admin-list-news-page-' . ($request->get('page') ?: 1), 3600 * 24, function () {
+        $page = $request->get('page') ?: 1;
+
+        $news = Cache::tags(['news', 'tags'])->remember('admin-list-news-page-' . $page, 3600 * 24, function () {
             return $this->newsRepository->listAllNews();
         });
 
