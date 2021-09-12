@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    use HasFactory, CacheCleanable;
+    use HasFactory;
+    use CacheCleanable;
 
     protected $fillable = ['body', 'article_id', 'owner_id'];
 

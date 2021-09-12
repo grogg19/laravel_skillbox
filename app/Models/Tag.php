@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    use HasFactory, CacheCleanable;
+    use HasFactory;
+    use CacheCleanable;
 
     /**
      * @var string[]

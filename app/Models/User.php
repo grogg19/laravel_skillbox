@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, CacheCleanable;
+    use HasFactory;
+    use Notifiable;
+    use CacheCleanable;
 
     /**
      * The attributes that are mass assignable.

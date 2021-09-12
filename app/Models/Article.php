@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Cache;
  */
 class Article extends Model implements HasTags, HasComments
 {
-    use HasFactory, CacheCleanable;
+    use HasFactory;
+    use CacheCleanable;
 
     protected $guarded = [];
 

@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Cache;
  */
 class Message extends Model
 {
-    use HasFactory, CacheCleanable;
+    use HasFactory;
+    use CacheCleanable;
 
     protected $guarded = [];
 
