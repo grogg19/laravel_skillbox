@@ -23,10 +23,10 @@ class NewsController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $request->get('page') ?: 1;
+        $currentPage = $request->get('page') ?: 1;
 
-        $news = Cache::tags(['news', 'tags'])->remember('list-news-page-' . $page, 3600 * 24, function () {
-            return $this->newsRepository->listPublishedNews();
+        $news = Cache::tags(['news', 'tags'])->remember('list-news-page-' . $currentPage, 3600 * 24, function () use ($currentPage) {
+            return $this->newsRepository->listPublishedNews($currentPage);
         });
 
         return view('news.list', compact('news'));

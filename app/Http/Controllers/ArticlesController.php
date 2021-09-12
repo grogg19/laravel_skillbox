@@ -40,10 +40,10 @@ class ArticlesController extends Controller
      */
     public function index(Request $request): View
     {
-        $page = $request->get('page') ?: 1;
+        $currentPage = $request->get('page') ?: 1;
 
-        $articles = Cache::tags(['articles', 'tags'])->remember('list-articles-page-' . $page, 3600 * 24, function () {
-            return $this->articleRepository->listArticles();
+        $articles = Cache::tags(['articles', 'tags'])->remember('list-articles-page-' . $currentPage, 3600 * 24, function () use ($currentPage) {
+            return $this->articleRepository->listArticles($currentPage);
         });
 
         return view('index', compact('articles'));

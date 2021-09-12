@@ -28,10 +28,10 @@ class AdminArticlesController extends Controller
 
     public function index(Request $request)
     {
-        $page = $request->get('page') ?: 1;
+        $currentPage = $request->get('page') ?: 1;
 
-        $articles = Cache::tags(['articles', 'tags'])->remember('admin-list-articles-page-' . $page, 3600 * 24, function () {
-            return $this->articleRepository->listAllArticles();
+        $articles = Cache::tags(['articles', 'tags'])->remember('admin-list-articles-page-' . $currentPage, 3600 * 24, function () use ($currentPage) {
+            return $this->articleRepository->listAllArticles($currentPage);
         });
 
         return view('articles.admin.list', compact('articles'));

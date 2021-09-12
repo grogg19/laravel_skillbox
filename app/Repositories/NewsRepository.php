@@ -10,26 +10,28 @@ class NewsRepository implements NewsRepositoryInterface
 {
 
     /**
+     * @param int $currentPage
      * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function listPublishedNews(int $perPage = 10): LengthAwarePaginator
+    public function listPublishedNews($currentPage = 1, int $perPage = 10): LengthAwarePaginator
     {
         return News::latest()
             ->where('is_published', true)
             ->with('tags')
-            ->paginate($perPage);
+            ->paginate($perPage, '*', 'page', $currentPage);
     }
 
     /**
+     * @param int $currentPage
      * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function listAllNews(int $perPage = 20): LengthAwarePaginator
+    public function listAllNews($currentPage = 1, int $perPage = 20): LengthAwarePaginator
     {
         return News::latest()
             ->with('tags')
-            ->paginate($perPage);
+            ->paginate($perPage, '*', 'page', $currentPage);
     }
 
     /**
