@@ -31,7 +31,7 @@ class AdminReportsController extends Controller
 
         TotalReport::dispatch(auth()->user(), $data)->onQueue('reports');
         return back()
-            ->with(['status' => 'Запрос на генерацию отчета усппешно отправлен.']);
+            ->with(['status' => 'Запрос на генерацию отчета успешно отправлен.']);
     }
 
     public function totalReport()

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\HasTags;
 use App\Models\Tag;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class TagsSynchronizer
 {
@@ -31,5 +32,7 @@ class TagsSynchronizer
         }
 
         $model->tags()->sync($syncIds);
+
+        Cache::tags(['tags'])->flush();
     }
 }

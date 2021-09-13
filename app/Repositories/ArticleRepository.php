@@ -18,26 +18,29 @@ class ArticleRepository implements ArticleRepositoryInterface
 {
 
     /**
+     * @param int $currentPage
      * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function listAllArticles(int $perPage = 20): LengthAwarePaginator
+    public function listAllArticles(int $currentPage = 1, int $perPage = 20): LengthAwarePaginator
     {
         return Article::latest()
             ->with('tags')
-            ->paginate($perPage);
+            ->paginate($perPage, '*', 'page', $currentPage);
+
     }
 
     /**
+     * @param int $currentPage
      * @param int $perPage
      * @return LengthAwarePaginator
      */
-    public function listArticles(int $perPage = 10): LengthAwarePaginator
+    public function listArticles(int $currentPage = 1, int $perPage = 10): LengthAwarePaginator
     {
         return Article::latest()
             ->with('tags')
             ->where('is_published', true)
-            ->paginate($perPage);
+            ->paginate($perPage, '*', 'page', $currentPage);
     }
 
     /**
@@ -47,6 +50,7 @@ class ArticleRepository implements ArticleRepositoryInterface
     public function getArticleBySlug(string $slug)
     {
         return Article::where('slug', $slug)
+            ->with('tags')
             ->with('comments')
             ->first();
     }
