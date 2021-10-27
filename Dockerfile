@@ -111,7 +111,7 @@ RUN bash /usr/sbin/cs.sh
 
 RUN bash /db-init.sh
 
-RUN ln -s /root/.nvm/versions/node/v16.8.0/bin/laravel-echo-server /usr/bin/laravel-echo-server
+RUN ln -s /root/.nvm/versions/node/v17.0.1/bin/laravel-echo-server /usr/bin/laravel-echo-server
 
 WORKDIR /home/www
 
