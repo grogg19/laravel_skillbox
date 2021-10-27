@@ -6,6 +6,8 @@
     <div class="mb-4 font-italic border-bottom"></div>
     <h2>Администрирование | {{ $news->title }}</h2>
 
+    @include('tags.list', ['tags' => $news->tags])
+
     <p class="blog-post-meta">{{ $news->created_at->toFormattedDateString() }}</p>
     {{ $news->body }}
     <p class="my-4">

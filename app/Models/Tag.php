@@ -2,17 +2,21 @@
 
 namespace App\Models;
 
+use App\Helpers\CacheCleanable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
     use HasFactory;
+    use CacheCleanable;
 
     /**
      * @var string[]
      */
     protected $fillable = ['name'];
+
+    protected static $tags = ['tags'];
 
     public function articles()
     {
@@ -36,5 +40,6 @@ class Tag extends Model
     {
         return 'name';
     }
+
 
 }

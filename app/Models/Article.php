@@ -5,9 +5,11 @@ namespace App\Models;
 use App\Events\ArticleCreated;
 use App\Events\ArticleDeleted;
 use App\Events\ArticleUpdated;
+use App\Helpers\CacheCleanable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class Article
@@ -16,8 +18,11 @@ use Illuminate\Support\Arr;
 class Article extends Model implements HasTags, HasComments
 {
     use HasFactory;
+    use CacheCleanable;
 
     protected $guarded = [];
+
+    protected static $tags = ['articles'];
 
     protected $dispatchesEvents = [
         'created' => ArticleCreated::class,

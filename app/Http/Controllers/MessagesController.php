@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Message\StoreMessageRequest;
 use App\Repositories\MessageRepositoryInterface;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 /**
@@ -33,7 +34,9 @@ class MessagesController extends Controller
      */
     public function index(): View
     {
-        $messages = $this->messagesRequest->listMessages();
+        $messages = Cache::tags(['messages'])->remember('messages',3600 * 24, function () {
+            return $this->messagesRequest->listMessages();
+        });
 
         return view('feedback', compact('messages'));
     }
