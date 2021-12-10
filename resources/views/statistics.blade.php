@@ -50,6 +50,7 @@
                                 <h6 class="card-subtitle mb-2 text-muted">{{ $averageQuantityArticles }} статей</h6>
                             </div>
                         </div>
+                        @if($mostChangeableArticle !== null)
                         <div class="card col-3 m-1" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">Самая часто изменяемая статья</h5>
@@ -57,6 +58,7 @@
                                 <a href="{{ route('article.show', $mostChangeableArticle['slug']) }}" class="card-link">Посмотреть</a>
                             </div>
                         </div>
+                        @endif
                         <div class="card col-3 m-1" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">Самая обсуждаемая статья</h5>
