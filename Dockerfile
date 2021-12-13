@@ -44,15 +44,30 @@ RUN apt-get install php7.4-xdebug # Xdebug debugger
 RUN apt-get install nginx -y
 
 RUN mkdir /var/run/mysqld
+RUN mkdir /root/.nvm
 
 #RUN apt-get install mariadb-server -y
 RUN apt-get install mysql-server -y
 RUN apt-get install sqlite -y
 RUN apt-get install git nodejs npm nano tree vim curl wget ftp -y
 
-RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+#RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 
-RUN npm install -g bower grunt-cli gulp laravel-echo
+ENV NVM_DIR /root/.nvm
+ENV NODE_VERSION 17.0.1
+
+# Install nvm with node and npm
+RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+#RUN npm install -g bower grunt-cli gulp laravel-echo
+RUN npm install -g bower grunt-cli gulp
 
 
 RUN apt install mc -y
@@ -63,7 +78,7 @@ ENV LOG_STDOUT **Boolean**
 ENV LOG_STDERR **Boolean**
 ENV LOG_LEVEL warn
 ENV ALLOW_OVERRIDE All
-ENV DATE_TIMEZONE UTC
+ENV DATE_TIMEZONE $TZ
 
 
 #COPY run-lamp.sh /usr/sbin/
@@ -95,6 +110,10 @@ RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysq
 # ROOT PASSWORD
 ENV MYSQL_ROOT_PASSWORD=password
 
+#ENV MYSQL_DATABASE=cms
+#ENV MYSQL_USER=root
+#ENV MYSQL_PASSWORD=password
+
 # Setup Mysql DB
 COPY db-init.sh /db-init.sh
 
@@ -107,7 +126,9 @@ RUN bash /usr/sbin/cs.sh
 
 RUN bash /db-init.sh
 
-RUN ln -s /root/.nvm/versions/node/v17.0.1/bin/laravel-echo-server /usr/bin/laravel-echo-server
+RUN npm install -g laravel-echo-server
+
+RUN ln -s /root/.nvm/versions/node/v$NODE_VERSION/bin/laravel-echo-server /usr/bin/laravel-echo-server
 
 WORKDIR /home/www
 
