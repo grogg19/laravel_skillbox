@@ -1,62 +1,38 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Cms на Laravel
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<h3>Создание CMS для управления контентом блога:</h3>
+<h5>Задачи:</h5>
+<ul>
+    <li>Возможность регистрации и авторизации пользователя</li>
+    <li>Зарегистрированные пользователи могут писать статьи, новости, оставлять комментарии, добавлять теги</li>
+    <li>Определить ресурсы и обеспечить URL ресурсов</li>
+    <li>В разделе администрирования сделать возможность администрировать статьи, новости и формировать отчеты по сайту</li>
+    <li>Выборка статей и новостей по тегам</li>
+    <li>При создании статей или новостей, отправляются уведомления всем пользователям используя API PushAll</li>
+    <li>Все отчеты по сайту создаются в форме Jobs, ставятся в очереди и выполняются воркером</li>
+    <li>Раздел администрирования доступен только с ролью Администратора</li>
+    <li>При генерации отчета, результат записывается в Excel файл и прицепляется вложением к письму</li>
+    <li>Использовать кеширование везде, кроме раздела статистики и отчетов</li>
+    <li>При обновлении статьи, всем администраторам отправляется уведомление через websocket об изменении статьи</li>
+    <li>Для очередей и Broadcast использовать Redis</li>
+    <li>Использовать Laravel-Echo-Server и Socket.io</li>
+    <li>Для тегов использовать полиморфные отношения</li>
+</ul>
 
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<h6>Установка для Docker:</h6>
+<ol>
+    <li>Создаем папку проекта, например blog</li>
+    <li>В этой папке делаем <code>git clone https://github.com/grogg19/laravel_skillbox .</code></li>
+    <li>Подгрузка зависимостей<code>composer install</code></li>
+    <li><code>docker build -t laravel-skillbox .</code></li>
+    <li>Дальше подключаем образ laravel-skillbox через клиент Docker либо командой:<br>
+        <code>docker run --name laravel-skillbox -p 80:80 -p 3306:3306 -p 6001:6001 -v /путь/к/папке/проекта:/home/www laravel-skillbox</code>
+    </li>
+    <li>Запуск созданного контейнера laravel-skillbox</li>
+    <li>Подгрузка модулей node <code>npm install</code></li>
+    <li>Инициализация Laravel Echo сервера <code>laravel-echo-server init</code> В качестве параметра "database" указать "redis".</li>
+    <li>Генерация ключа приложения <code>php artisan key:generate</code></li>
+    <li>Миграции с сидерами <code>php artisan migrate --seed</code></li>
+    <li>Для работы push сообщений, в проекте использован сервис PushAll, поэтому необходимо указать PUSHALL_PRIVATE_KEY и PUSHALL_PRIVATE_ID в настройках в файле .env. Получить их можно, создав аккаунт на этом сервисе.</li>
+    <li>Ready to work!</li>
+</ol>
